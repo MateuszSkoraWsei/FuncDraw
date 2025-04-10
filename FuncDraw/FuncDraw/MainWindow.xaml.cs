@@ -19,6 +19,8 @@ namespace FuncDraw
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+        
     }
 }

@@ -11,11 +11,48 @@
             <ColumnDefinition Width="*"  Name="mainGrid"/>
             <ColumnDefinition Width="200" Name="editor" />
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="1" Width="auto"  Background="WhiteSmoke">
-            <Button Width="90" Margin="5">Button1</Button>
-        </StackPanel>
+
+        <DockPanel Grid.Column="1" Width="auto"  HorizontalAlignment="Stretch" Background="WhiteSmoke">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20px" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button 
+                        x:Name="ShowHide"
+                        Width="30"
+                        BorderThickness="0" 
+                        Background="WhiteSmoke"
+                        Content="|||"
+                        VerticalAlignment="Center"
+                        Margin="0,0,150,0" Grid.Column="1"
+                >
+                    <Button.RenderTransform>
+                        <RotateTransform Angle="90" />
+                    </Button.RenderTransform>
+                </Button>
+                <Button 
+                    Grid.Column="2"
+                    Width="90" 
+                    VerticalAlignment="top"
+                    Margin="5"
+                    Height="20"
+                    >Button1</Button>
+                <Button 
+    Grid.Column="1"
+    Width="90" 
+    
+    Margin="45,30,45,384"
+    Height="20"
+    >Button2</Button>
+
+            </Grid>
+        </DockPanel>
 
     </Grid>
-    
+
 </Window>
