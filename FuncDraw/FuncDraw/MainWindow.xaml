@@ -5,13 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FuncDraw"
         mc:Ignorable="d"
-        Title="FuncDraw" Height="450" Width="800">
-    <Grid x:Name="MainGrid">
+        Title="FuncDraw" Height="450" Width="800"
+        SizeChanged="GenerateGrid">
+    <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"  Name="mainGrid"/>
+            <ColumnDefinition Width="*"  Name="mainGrid" />
             <ColumnDefinition Width="200" Name="editor" />
         </Grid.ColumnDefinitions>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="MainGrid" Background="WhiteSmoke" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Grid>
         <DockPanel x:Name="SideMenu" Grid.Column="1" Width="200"  HorizontalAlignment="Left" Background="WhiteSmoke">
 
             <Grid>
