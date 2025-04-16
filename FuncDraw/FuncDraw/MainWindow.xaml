@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:FuncDraw"
         mc:Ignorable="d"
         Title="FuncDraw" Height="450" Width="800"
-        SizeChanged="GenerateGrid">
+        SizeChanged="GenerateGrid"
+        MouseWheel="MainWindow_MouseWheelEvent">
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"  Name="mainGrid" />

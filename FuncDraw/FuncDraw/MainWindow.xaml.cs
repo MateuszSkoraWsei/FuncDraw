@@ -24,14 +24,25 @@ namespace FuncDraw
             ShowHideBtn.Click += ShowHideBtn_Click;
             MainGrid.SizeChanged += GenerateGrid;
             
-
         }
         private void ShowHideBtn_Click(object sender, RoutedEventArgs e)
         {
            editor.Width = editor.Width == new GridLength(20) ?  new GridLength(200) : new GridLength(20);
            
         }
-
+        public void MainWindow_MouseWheelEvent(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                size += 1;
+            }
+            else
+            {
+                size -= 1;
+                if (size < 1) size = 1;
+            }
+            GenerateGrid(sender, e);
+        }
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
             MainGrid.Children.Clear();
