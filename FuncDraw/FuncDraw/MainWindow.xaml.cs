@@ -19,8 +19,13 @@ namespace FuncDraw
         public MainWindow()
         {
             InitializeComponent();
-            
+            ShowHideBtn.Click += ShowHideBtn_Click;
+
         }
-        
+        private void ShowHideBtn_Click(object sender, RoutedEventArgs e)
+        {
+           editor.Width = editor.Width == new GridLength(20) ?  new GridLength(200) : new GridLength(20);
+        }
+
     }
 }

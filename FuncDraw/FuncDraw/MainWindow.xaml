@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:FuncDraw"
         mc:Ignorable="d"
         Title="FuncDraw" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"  Name="mainGrid"/>
             <ColumnDefinition Width="200" Name="editor" />
         </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Column="1" Width="auto"  HorizontalAlignment="Stretch" Background="WhiteSmoke">
+        <DockPanel x:Name="SideMenu" Grid.Column="1" Width="200"  HorizontalAlignment="Left" Background="WhiteSmoke">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -22,19 +22,6 @@
                     <ColumnDefinition Width="20px" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button 
-                        x:Name="ShowHide"
-                        Width="30"
-                        BorderThickness="0" 
-                        Background="WhiteSmoke"
-                        Content="|||"
-                        VerticalAlignment="Center"
-                        Margin="0,0,150,0" Grid.Column="1"
-                >
-                    <Button.RenderTransform>
-                        <RotateTransform Angle="90" />
-                    </Button.RenderTransform>
-                </Button>
                 <Button 
                     Grid.Column="2"
                     Width="90" 
@@ -49,6 +36,16 @@
     Margin="45,30,45,384"
     Height="20"
     >Button2</Button>
+                <Button x:Name="ShowHideBtn" Content="|||" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Width="20" Height="20" BorderBrush="WhiteSmoke" Background="WhiteSmoke">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="90"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
 
             </Grid>
         </DockPanel>
