@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace FuncDraw
 {
     /// <summary>
@@ -23,7 +24,9 @@ namespace FuncDraw
             InitializeComponent();
             ShowHideBtn.Click += ShowHideBtn_Click;
             MainGrid.SizeChanged += GenerateGrid;
+            AddBtn.Click += GenerateExpresionCreator;
             
+
         }
         private void ShowHideBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -68,6 +71,90 @@ namespace FuncDraw
                 line.Y2 = i;
                 MainGrid.Children.Add(line);
             }
+        }
+        public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
+        {
+            
+            
+            AddBtn.Visibility = Visibility.Collapsed;
+            Border border = new Border();
+
+            StackPanel stackPanel = new StackPanel()
+            {
+                Width = ExpressionContainer.ActualWidth - 10 ,
+                Height = 30,
+                Background = Brushes.LightGray,
+                Orientation = Orientation.Horizontal,
+
+            };
+            Button setColor = new Button()
+            {
+                Content = "",
+                Background = Brushes.Red,
+                Width = 20,
+                Height = 20,
+                Margin = new Thickness(5),
+
+            };
+            TextBox textBox = new TextBox()
+            {
+                Width = 100,
+                Height = 20,
+                Margin = new Thickness(5),
+                
+            };
+            
+            
+            Button createBtn = new Button()
+            {
+                Content = "✔",
+                Width = 20,
+                Height = 20,
+                Margin = new Thickness(5),
+                
+                
+            };
+            
+
+            // dodawanie elementów do siebie
+            border.Child = stackPanel;
+            stackPanel.Children.Add(setColor);
+            stackPanel.Children.Add(textBox);
+            stackPanel.Children.Add(createBtn);
+            //dodawanie do stackPanel
+            ExpressionContainer.Children.Add(border);
+
+
+            //dodanie eventu do przycisku createBtn
+
+            createBtn.Click += (s, e) =>
+            {
+                var parent = AddBtn.Parent as Panel;
+                if (parent != null)
+                {
+                    parent.Children.Remove(AddBtn);
+                }
+                int index = ExpressionContainer.Children.IndexOf(border);
+                ExpressionContainer.Children.Insert(index + 1, AddBtn);
+                AddBtn.Visibility = Visibility.Visible;
+            };
+
+
+        }
+        public void testAdd(object sender, RoutedEventArgs e)
+        {
+           
+            //tworzenie buttona
+
+            Button test1 = new Button();
+            test1.Content = $"Test";
+
+            test1.Width = 50;
+            test1.Height = 20;
+            
+
+            //dodanie do stackPanel
+            ExpressionContainer.Children.Add(test1);
         }
 
     }
