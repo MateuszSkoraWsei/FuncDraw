@@ -179,6 +179,34 @@ namespace FuncDraw
                 //dodanie do stackPanel
                 ExpressionContainer.Children.Insert(index ,functionDisplay);
 
+                //dodanie eventu do przycisku menuButton
+
+                menuButton.Click += (s, e) =>
+                {
+                    //dodanie menu kontekstowego
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem deleteItem = new MenuItem() { Header = "Delete" , Icon = "X" };
+                    deleteItem.Click += (s, e) =>
+                    {
+                        if( menuButton.Parent is StackPanel funcitonDisplay )
+                        {
+                            ExpressionContainer.Children.Remove(funcitonDisplay);
+                        }
+                        
+                        
+                    };
+                    MenuItem editItem = new MenuItem() { Header = "Edit" , Icon = "e"};
+                    editItem.Click += (s, e) =>
+                    {
+                        //dodanie edytora
+                        
+                    };
+                    contextMenu.Items.Add(deleteItem);
+                    contextMenu.Items.Add(editItem);
+                    menuButton.ContextMenu = contextMenu;
+                    contextMenu.IsOpen = true;
+                };
+
                 //usunięcie / schowanie siebie ( border) 
                 border.Visibility = Visibility.Collapsed;
 
@@ -191,6 +219,7 @@ namespace FuncDraw
                 ExpressionContainer.Children.Insert(index + 1, AddBtn);
                 AddBtn.Visibility = Visibility.Visible;
             };
+            
 
             //dodawanie eventu do przycisku setColor
             setColor.Click += (s, e) =>
