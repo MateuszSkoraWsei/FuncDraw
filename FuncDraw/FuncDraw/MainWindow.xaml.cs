@@ -74,6 +74,74 @@ namespace FuncDraw
                 line.Y2 = i;
                 MainGrid.Children.Add(line);
             }
+
+            // storzenie osi x i y 
+            int xCenter = (int) (Math.Floor(MainGrid.ActualWidth / size))/2 * size ;
+            int yCenter = (int)(Math.Floor(MainGrid.ActualHeight / size)) / 2 * size;
+            Line xAxis = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = 0,
+                Y1 = yCenter,
+                X2 = MainGrid.ActualWidth,
+                Y2 = yCenter
+            };
+            //dodanie strzałki do osi x
+            Line xArrow1 = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = MainGrid.ActualWidth - size,
+                Y1 = yCenter - size / 2,
+                X2 = MainGrid.ActualWidth,
+                Y2 = yCenter
+            };
+            Line xArrow2 = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = MainGrid.ActualWidth - size,
+                Y1 = yCenter + size / 2,
+                X2 = MainGrid.ActualWidth,
+                Y2 = yCenter
+            };
+
+            Line yAxis = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = xCenter,
+                Y1 = 0,
+                X2 = xCenter,
+                Y2 = MainGrid.ActualHeight
+            };
+            //dodanie strzałki do osi y
+            Line yArrow1 = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = xCenter - size/2,
+                Y1 = size,
+                X2 = xCenter,
+                Y2 = 0
+            };
+            Line yArrow2 = new Line()
+            {
+                Stroke = Brushes.Black,
+                StrokeThickness = 2,
+                X1 = xCenter + size/2,
+                Y1 = size,
+                X2 = xCenter,
+                Y2 = 0
+            };
+
+            MainGrid.Children.Add(xAxis);
+            MainGrid.Children.Add(yAxis);
+            MainGrid.Children.Add(xArrow1);
+            MainGrid.Children.Add(xArrow2);
+            MainGrid.Children.Add(yArrow1);
+            MainGrid.Children.Add(yArrow2);
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
         {
