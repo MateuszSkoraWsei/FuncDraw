@@ -3,13 +3,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
-using System.Windows.Forms;
+using ColorDialog = System.Windows.Forms.ColorDialog;
 using Brushes = System.Windows.Media.Brushes;
 using Button = System.Windows.Controls.Button;
-using Application = System.Windows.Application;
 using TextBox = System.Windows.Controls.TextBox;
 using Orientation = System.Windows.Controls.Orientation;
 using Panel = System.Windows.Controls.Panel;
+using Label = System.Windows.Controls.Label;
 
 
 namespace FuncDraw
@@ -21,6 +21,7 @@ namespace FuncDraw
     {
        
         public int size = 10 ;
+        public int elementCounter = 1;
         public MainWindow()
         {
             InitializeComponent();
@@ -76,8 +77,8 @@ namespace FuncDraw
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
         {
-            
-            
+            System.Windows.Media.Color color = System.Windows.Media.Colors.Red;
+
             AddBtn.Visibility = Visibility.Collapsed;
             Border border = new Border();
 
@@ -132,12 +133,61 @@ namespace FuncDraw
 
             createBtn.Click += (s, e) =>
             {
+                int index = ExpressionContainer.Children.IndexOf(border);
+                // stworzenie stackPanelu FunctionDisplay$ - wyświetlenie informacji o utworzonej funkcji  
+                StackPanel functionDisplay = new StackPanel()
+                {
+                    Width = ExpressionContainer.ActualWidth - 10,
+                    Height = 30,
+                    Background = Brushes.LightGray,
+                    Orientation = Orientation.Horizontal,
+                };
+                Shape square = new System.Windows.Shapes.Rectangle()
+                {
+                    Name = $"Square{elementCounter}",
+                    Width = 20,
+                    Height = 20,
+                    Fill = new System.Windows.Media.SolidColorBrush(color),
+                    Margin = new Thickness(5),
+                };
+
+                Label lblFuntion = new Label()
+                {
+                    Name = $"LabelFunction{elementCounter}",
+                    Content = textBox.Text,
+                    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    FontWeight = FontWeights.Bold,
+                    Width = 100,
+                    Height = 30,
+
+                };
+
+                Button menuButton = new Button()
+                {
+                    Name = $"MenuButton{elementCounter}",
+                    Content = "...",
+                    Width = 20,
+                    Height = 20,
+                    Margin = new Thickness(5),
+                };
+                //dodanie elementów do siebie
+                functionDisplay.Children.Add(square);
+                functionDisplay.Children.Add(lblFuntion);
+                functionDisplay.Children.Add(menuButton);
+
+                //dodanie do stackPanel
+                ExpressionContainer.Children.Insert(index ,functionDisplay);
+
+                //usunięcie / schowanie siebie ( border) 
+                border.Visibility = Visibility.Collapsed;
+
                 var parent = AddBtn.Parent as Panel;
                 if (parent != null)
                 {
                     parent.Children.Remove(AddBtn);
                 }
-                int index = ExpressionContainer.Children.IndexOf(border);
+                
                 ExpressionContainer.Children.Insert(index + 1, AddBtn);
                 AddBtn.Visibility = Visibility.Visible;
             };
@@ -148,7 +198,7 @@ namespace FuncDraw
                 ColorDialog colorDialog = new ColorDialog();
                 if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+                    color = System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
                     setColor.Background = new System.Windows.Media.SolidColorBrush(color);
                 }
             };
