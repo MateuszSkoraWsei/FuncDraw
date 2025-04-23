@@ -1,13 +1,15 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using Brushes = System.Windows.Media.Brushes;
+using Button = System.Windows.Controls.Button;
+using Application = System.Windows.Application;
+using TextBox = System.Windows.Controls.TextBox;
+using Orientation = System.Windows.Controls.Orientation;
+using Panel = System.Windows.Controls.Panel;
 
 
 namespace FuncDraw
@@ -127,6 +129,7 @@ namespace FuncDraw
 
             //dodanie eventu do przycisku createBtn
 
+
             createBtn.Click += (s, e) =>
             {
                 var parent = AddBtn.Parent as Panel;
@@ -137,6 +140,17 @@ namespace FuncDraw
                 int index = ExpressionContainer.Children.IndexOf(border);
                 ExpressionContainer.Children.Insert(index + 1, AddBtn);
                 AddBtn.Visibility = Visibility.Visible;
+            };
+
+            //dodawanie eventu do przycisku setColor
+            setColor.Click += (s, e) =>
+            {
+                ColorDialog colorDialog = new ColorDialog();
+                if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+                    setColor.Background = new System.Windows.Media.SolidColorBrush(color);
+                }
             };
 
 
