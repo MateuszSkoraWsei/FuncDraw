@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+
 using ColorDialog = System.Windows.Forms.ColorDialog;
 using Brushes = System.Windows.Media.Brushes;
 using Button = System.Windows.Controls.Button;
@@ -10,7 +12,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using Orientation = System.Windows.Controls.Orientation;
 using Panel = System.Windows.Controls.Panel;
 using Label = System.Windows.Controls.Label;
-
+using MessageBox = System.Windows.MessageBox;
 
 namespace FuncDraw
 {
@@ -19,7 +21,7 @@ namespace FuncDraw
     /// </summary>
     public partial class MainWindow : Window
     {
-       
+        public List<string> expressions = new List<string>();
         public int size = 10 ;
         public int elementCounter = 1;
         public MainWindow()
@@ -51,9 +53,16 @@ namespace FuncDraw
         }
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
-           GridDrower grid = new GridDrower(MainGrid, size);
+            GridDrower grid = new GridDrower(MainGrid, size);
             grid.DrawGrid(MainGrid, size);
             grid.DrawAxes(MainGrid, size);
+            foreach (var expression in expressions)
+            {
+                string correctedExpression = expression.Split('=')[1];
+                
+                List<string> tokens = Tokenizer.Tokenize(correctedExpression);
+                MessageBox.Show(string.Join(", ", tokens));
+            }
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
         {
@@ -107,12 +116,41 @@ namespace FuncDraw
             //dodawanie do stackPanel
             ExpressionContainer.Children.Add(border);
 
+            // dodanie RegEx 
+
+            textBox.PreviewTextInput += (s, e) =>
+            {
+                string pattern = @"^[xyXY+\-*=\/\d]+$";
+                if (!Regex.IsMatch(e.Text, pattern))
+                {
+                    e.Handled = true; // zapobiega dalszemu przetwarzaniu zdarzenia
+                }
+                
+                
+            };
+            textBox.LostFocus += (s, e) =>
+            {
+                string pattern = @"^ *[xyXY] *=( *-? *\d* *[xyXY]? *[+\-*\/] *)*( *-? *\d+ *| *[xyXY] *| *\d+ *[xyXY] *)$";
+                if (!Regex.IsMatch(textBox.Text, pattern))
+                {
+                    MessageBox.Show("Invalid expression format. Please use the format: x=expression or y=expression");
+
+                    textBox.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        textBox.Focus();
+                        
+                    }), System.Windows.Threading.DispatcherPriority.Input);
+                   
+                }
+            };
+            
 
             //dodanie eventu do przycisku createBtn
 
 
             createBtn.Click += (s, e) =>
             {
+                expressions.Add(textBox.Text);
                 int index = ExpressionContainer.Children.IndexOf(border);
                 // stworzenie stackPanelu FunctionDisplay$ - wyświetlenie informacji o utworzonej funkcji  
                 StackPanel functionDisplay = new StackPanel()
