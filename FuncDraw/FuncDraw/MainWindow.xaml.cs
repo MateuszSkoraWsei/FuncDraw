@@ -62,6 +62,8 @@ namespace FuncDraw
                 
                 List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                 MessageBox.Show(string.Join(", ", tokens));
+                CalculatePosition calculate = new CalculatePosition();
+                calculate.FindEquasion(tokens);
             }
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)

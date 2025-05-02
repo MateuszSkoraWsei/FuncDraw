@@ -13,7 +13,7 @@ namespace FuncDraw
         /// <summary>
         /// Tokenizes the expression into a list of strings
         /// </summary>
-        /// <returns></returns>
+        /// <returns>return list of tokens</returns>
         /// <exception cref="ArgumentException">if catches wrong character , difrent from (XYxy+-*/)</exception>
         public static List<string> Tokenize(string expression)
         {
