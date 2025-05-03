@@ -7,10 +7,10 @@ namespace FuncDraw
 {
     class GridDrower
     {
-        private readonly Grid _mainGrid ;
+        private readonly Canvas _mainGrid ;
         private readonly int _gridSize;
 
-        public GridDrower(Grid mainGrid, int gridSize)
+        public GridDrower(Canvas mainGrid, int gridSize)
         {
             _mainGrid = mainGrid;
             _gridSize = gridSize;
@@ -20,7 +20,7 @@ namespace FuncDraw
         /// </summary>
         /// <param name="MainGrid">localization where grid is draw</param>
         /// <param name="gridSize">size of grid</param>
-        public void DrawGrid(Grid MainGrid, int gridSize)
+        public void DrawGrid(Canvas MainGrid, int gridSize)
         {
             MainGrid.Children.Clear();
             for (int i = 0; i < MainGrid.ActualWidth; i += gridSize)
@@ -51,7 +51,7 @@ namespace FuncDraw
         /// </summary>
         /// <param name="MainGrid">locatization where grid is draw</param>
         /// <param name="size">size of grid</param>
-        public void DrawAxes(Grid MainGrid , int size)
+        public void DrawAxes(Canvas MainGrid , int size)
         {
             // storzenie osi x i y 
             int xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;

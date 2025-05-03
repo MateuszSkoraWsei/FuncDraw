@@ -13,6 +13,10 @@ namespace FuncDraw
         public int actualPriority = 0;
         public List<int> priorityTable = new List<int>(); // Fixed the error by initializing the list properly.  
         public int result = 0;
+        private int x;
+        private int y;
+        private List<string> tokens;
+        private string output;
         int GetPriority(string token)
         {
             if ("*/".Contains(token)) return 2;
@@ -24,8 +28,59 @@ namespace FuncDraw
              return 0;
             
         }
-        public void FindEquasion(List<string> tokens)
+        public CalculatePosition(int X = 0 , int Y = 0 , List<string> Tokens = null , string Output = "y")
         {
+            x = X;
+            y = Y;
+            tokens = Tokens ?? new List<string>();
+            output = Output;
+        }
+        public string FindEquasion()
+        {
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                if (tokens[i].Contains("x") || tokens[i].Contains("X"))
+                {
+                    if(output == "x" || output == "X")
+                    {
+                       
+                        throw new ArgumentException("Invalid character 'x' in expression.");
+
+                    }
+                    else
+                    {
+                        if (tokens[i].Length == 1 )
+                        {
+                            tokens[i] = x.ToString();
+                        }
+                        else
+                        {
+                            int index = tokens[i].IndexOf("x");
+                            int multiplaier = int.Parse(tokens[i].Substring(0, index));
+                            int wynik = multiplaier * x;
+                            tokens[i] = wynik.ToString();
+                        }
+                            
+                    }
+                        
+
+                }
+                else if(tokens[i].Contains("y") || tokens[i].Contains("Y"))
+                {
+                    if (output == "y" || output == "Y")
+                    {
+                        throw new ArgumentException("Invalid character 'y' in expression.");
+                    }
+                    else
+                    {
+                        int index = tokens[i].IndexOf("y");
+                        int multiplaier = int.Parse(tokens[i].Substring(0, index));
+                        int wynik = multiplaier * y;
+                        tokens[i] = wynik.ToString();
+                    }
+
+                }
+            }
             while (tokens.Count > 1)
             {
                  int Counter = 0;
@@ -38,28 +93,35 @@ namespace FuncDraw
                         MaxPriority = actualPriority;
                     }
                 }
+                
                 foreach (var priorityValue in priorityTable)
                 {
                     
                     if (priorityValue == MaxPriority && priorityTable.Count >= 3 && tokens.Count >= 3 )
                     {
                         // Perform calculations and update tokens list.  
-                        if (tokens[Counter] == "*")
-                        {
-                            result = Convert.ToInt32(tokens[Counter - 1]) * Convert.ToInt32(tokens[Counter + 1]);
-                        }
-                        else if (tokens[Counter] == "/")
-                        {
-                            result = Convert.ToInt32(tokens[Counter - 1]) / Convert.ToInt32(tokens[Counter + 1]);
-                        }
-                        else if (tokens[Counter] == "-")
-                        {
-                            result = Convert.ToInt32(tokens[Counter - 1]) - Convert.ToInt32(tokens[Counter + 1]);
-                        }
-                        else if (tokens[Counter] == "+")
-                        {
-                            result = Convert.ToInt32(tokens[Counter - 1]) + Convert.ToInt32(tokens[Counter + 1]);
-                        }
+                        
+                        
+                        
+                            if (tokens[Counter] == "*")
+                            {
+                                result = Convert.ToInt32(tokens[Counter - 1]) * Convert.ToInt32(tokens[Counter + 1]);
+                            }
+                            else if (tokens[Counter] == "/")
+                            {
+                                result = Convert.ToInt32(tokens[Counter - 1]) / Convert.ToInt32(tokens[Counter + 1]);
+                            }
+                            else if (tokens[Counter] == "-")
+                            {
+                                result = Convert.ToInt32(tokens[Counter - 1]) - Convert.ToInt32(tokens[Counter + 1]);
+                            }
+                            else if (tokens[Counter] == "+")
+                            {
+                                result = Convert.ToInt32(tokens[Counter - 1]) + Convert.ToInt32(tokens[Counter + 1]);
+                            }
+                        
+                        
+                        
                         tokens.RemoveAt(Counter - 1);
                         tokens.RemoveAt(Counter - 1);
                         tokens.RemoveAt(Counter -1);
@@ -67,6 +129,7 @@ namespace FuncDraw
                         priorityTable.RemoveAt(Counter - 1);
                         priorityTable.RemoveAt(Counter - 1);
                         priorityTable.RemoveAt(Counter - 1);
+                        priorityTable.Insert(Counter - 1, 0);
                         MaxPriority = 0;
                         Counter = 0;
                         break;
@@ -74,7 +137,19 @@ namespace FuncDraw
                     Counter++;
                 }
             }
-            MessageBox.Show(tokens[0]);
+            if(output == "x" || output == "X")
+            {
+                return $"{tokens[0]},{y}";
+            }
+            else if (output == "y" || output == "Y")
+            {
+                return $"{y},{tokens[0]}";
+            }
+            else
+            {
+                throw new ArgumentException("Invalid output variable. Expected 'x' or 'y'.");
+            }
+            
         }
     }
 }

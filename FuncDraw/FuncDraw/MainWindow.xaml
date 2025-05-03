@@ -17,8 +17,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="MainGrid" Background="WhiteSmoke" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        </Grid>
+        <Canvas x:Name="MainGrid" Background="WhiteSmoke" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Canvas>
         <DockPanel x:Name="SideMenu" Grid.Column="1" Width="200"  HorizontalAlignment="Left" Background="WhiteSmoke">
 
             <Grid x:Name="Container">

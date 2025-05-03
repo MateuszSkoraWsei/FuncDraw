@@ -13,6 +13,8 @@ using Orientation = System.Windows.Controls.Orientation;
 using Panel = System.Windows.Controls.Panel;
 using Label = System.Windows.Controls.Label;
 using MessageBox = System.Windows.MessageBox;
+using Color = System.Windows.Media.Color;
+using Point = System.Windows.Point;
 
 namespace FuncDraw
 {
@@ -22,6 +24,7 @@ namespace FuncDraw
     public partial class MainWindow : Window
     {
         public List<string> expressions = new List<string>();
+        public List<Color> colors = new List<Color>();
         public int size = 10 ;
         public int elementCounter = 1;
         public MainWindow()
@@ -56,14 +59,34 @@ namespace FuncDraw
             GridDrower grid = new GridDrower(MainGrid, size);
             grid.DrawGrid(MainGrid, size);
             grid.DrawAxes(MainGrid, size);
-            foreach (var expression in expressions)
+            for (int j = 0; j < expressions.Count; j++)
             {
+                string expression = expressions[j];
                 string correctedExpression = expression.Split('=')[1];
                 
-                List<string> tokens = Tokenizer.Tokenize(correctedExpression);
-                MessageBox.Show(string.Join(", ", tokens));
-                CalculatePosition calculate = new CalculatePosition();
-                calculate.FindEquasion(tokens);
+                
+                string output = expression.Split('=')[0].Trim();
+                int x = (int)(MainGrid.ActualWidth);
+                int y = (int)(MainGrid.ActualHeight);
+                int bigger = x > y ? x : y;
+                // stworzneie pętli 
+                PointsGenerator pointsGenerator = new PointsGenerator();
+                for (int i = 0; i < bigger; i+=size)
+                {
+                    // dodanie do listy
+                    List<string> tokens = Tokenizer.Tokenize(correctedExpression);
+                    CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
+                    string XYposition = calculate.FindEquasion();
+                    int X = int.Parse(XYposition.Split(",")[0]);
+                    int Y = int.Parse(XYposition.Split(",")[1]);
+                    pointsGenerator.AddPoint(X, Y);
+                }
+                // utworzenie polyline i dodanie do canvas
+                PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , colors[j] , 2 );
+                polyLineDrower.DrawPolyLine();
+
+
+
             }
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
@@ -153,6 +176,7 @@ namespace FuncDraw
             createBtn.Click += (s, e) =>
             {
                 expressions.Add(textBox.Text);
+                colors.Add(color);
                 int index = ExpressionContainer.Children.IndexOf(border);
                 // stworzenie stackPanelu FunctionDisplay$ - wyświetlenie informacji o utworzonej funkcji  
                 StackPanel functionDisplay = new StackPanel()
