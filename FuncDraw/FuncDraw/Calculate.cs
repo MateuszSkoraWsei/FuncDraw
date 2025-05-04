@@ -13,8 +13,8 @@ namespace FuncDraw
         public int actualPriority = 0;
         public List<int> priorityTable = new List<int>(); // Fixed the error by initializing the list properly.  
         public int result = 0;
-        private int x;
-        private int y;
+        private double x;
+        private double y;
         private List<string> tokens;
         private string output;
         int GetPriority(string token)
@@ -28,7 +28,7 @@ namespace FuncDraw
              return 0;
             
         }
-        public CalculatePosition(int X = 0 , int Y = 0 , List<string> Tokens = null , string Output = "y")
+        public CalculatePosition(double X = 0 , double Y = 0 , List<string> Tokens = null , string Output = "y")
         {
             x = X;
             y = Y;
@@ -57,7 +57,7 @@ namespace FuncDraw
                         {
                             int index = tokens[i].IndexOf("x");
                             int multiplaier = int.Parse(tokens[i].Substring(0, index));
-                            int wynik = multiplaier * x;
+                            double wynik = multiplaier * x;
                             tokens[i] = wynik.ToString();
                         }
                             
@@ -73,10 +73,18 @@ namespace FuncDraw
                     }
                     else
                     {
-                        int index = tokens[i].IndexOf("y");
-                        int multiplaier = int.Parse(tokens[i].Substring(0, index));
-                        int wynik = multiplaier * y;
-                        tokens[i] = wynik.ToString();
+                        if (tokens[i].Length == 1)
+                        {
+                            tokens[i] = y.ToString();
+                        }
+                        else
+                        {
+                            // Find the index of 'y' in the token
+                            int index = tokens[i].IndexOf("y");
+                            int multiplaier = int.Parse(tokens[i].Substring(0, index));
+                            double wynik = multiplaier * y;
+                            tokens[i] = wynik.ToString();
+                        }
                     }
 
                 }
@@ -93,7 +101,15 @@ namespace FuncDraw
                         MaxPriority = actualPriority;
                     }
                 }
-                
+                if (tokens[0] == "-")
+                {
+                    tokens.RemoveAt(0);
+                    priorityTable.RemoveAt(0);
+                    MaxPriority = 0;
+                    Counter = 0;
+                    tokens[0] = "-" + tokens[0];
+                    continue;
+                }
                 foreach (var priorityValue in priorityTable)
                 {
                     

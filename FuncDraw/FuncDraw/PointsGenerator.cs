@@ -11,7 +11,7 @@ namespace FuncDraw
         
         public List<Point> points = new List<Point>();
         
-        public void AddPoint(int x, int y)
+        public void AddPoint(double x, double y)
         {
             points.Add(new Point(x, y));
         }

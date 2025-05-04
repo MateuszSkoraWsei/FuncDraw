@@ -8,10 +8,10 @@ namespace FuncDraw
     class GridDrower
     {
         private readonly Canvas _mainGrid ;
-        private readonly int _gridSize;
+        private readonly double _gridSize;
        
 
-        public GridDrower(Canvas mainGrid, int GridSize)
+        public GridDrower(Canvas mainGrid, double GridSize)
         {
             _mainGrid = mainGrid;
             
@@ -24,7 +24,7 @@ namespace FuncDraw
         public void DrawGrid()
         {
             _mainGrid.Children.Clear();
-            for (int i = 0; i < _mainGrid.ActualWidth; i += _gridSize)
+            for (double i = 0; i < _mainGrid.ActualWidth; i += _gridSize)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
@@ -35,7 +35,7 @@ namespace FuncDraw
                 line.Y2 = _mainGrid.ActualHeight;
                 _mainGrid.Children.Add(line);
             }
-            for (int i = 0; i < _mainGrid.ActualHeight; i += _gridSize)
+            for (double i = 0; i < _mainGrid.ActualHeight; i += _gridSize)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
@@ -54,8 +54,8 @@ namespace FuncDraw
         public void DrawAxes()
         {
             // storzenie osi x i y 
-            int xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize;
-            int yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize;
+            double xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize;
+            double yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize;
             Line xAxis = new Line()
             {
                 Stroke = Brushes.Black,
@@ -122,7 +122,7 @@ namespace FuncDraw
             _mainGrid.Children.Add(yArrow2);
             //dodanie opisów do osi x i y
             
-            for (int i = _gridSize; i < _mainGrid.ActualWidth - _gridSize; i += _gridSize)
+            for (double i = _gridSize; i < _mainGrid.ActualWidth - _gridSize; i += _gridSize)
             {
                 Line line = new Line
                 {
@@ -159,7 +159,7 @@ namespace FuncDraw
                 _mainGrid.Children.Add(textBlock);
                 
             }
-            for (int i = _gridSize; i < _mainGrid.ActualHeight - _gridSize; i += _gridSize)
+            for (double i = _gridSize; i < _mainGrid.ActualHeight - _gridSize; i += _gridSize)
             {
                 Line line = new Line
                 {
@@ -174,7 +174,7 @@ namespace FuncDraw
                 TextBlock textBlock = new TextBlock();
                 if(i - yCenter == 0)
                 {
-                    textBlock.Text = "";
+                    textBlock.Text = " ";
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace FuncDraw
                     {
                         if (i % 5 == 0)
                         {
-                            textBlock.Text = (((double)i - (double)yCenter) / 10).ToString();
+                            textBlock.Text = (-1 * ((double)i - (double)yCenter) / 10).ToString();
                         }
                         else
                         {
@@ -191,7 +191,7 @@ namespace FuncDraw
                     }
                     else
                     {
-                        textBlock.Text = (((double)i - (double)yCenter) / 10).ToString();
+                        textBlock.Text = (-1 *((double)i - (double)yCenter) / 10).ToString();
                     }
                 }
                 

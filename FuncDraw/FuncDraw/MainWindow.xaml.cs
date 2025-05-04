@@ -25,7 +25,7 @@ namespace FuncDraw
     {
         public List<string> expressions = new List<string>();
         public List<Color> colors = new List<Color>();
-        public int size = 10 ;
+        public double size = 10 ;
         public int elementCounter = 1;
         public MainWindow()
         {
@@ -72,6 +72,8 @@ namespace FuncDraw
             GridDrower grid = new GridDrower(MainGrid, size);
             grid.DrawGrid();
             grid.DrawAxes();
+            double xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;
+            double yCenter = (int)(Math.Floor(MainGrid.ActualHeight / size)) / 2 * size;
             for (int j = 0; j < expressions.Count; j++)
             {
                 string expression = expressions[j];
@@ -83,15 +85,21 @@ namespace FuncDraw
                 int y = (int)(MainGrid.ActualHeight);
                 int bigger = x > y ? x : y;
                 // stworzneie pętli 
+                int begining = 0 - bigger / 2;
+                int end = 0 + bigger / 2;
+                
                 PointsGenerator pointsGenerator = new PointsGenerator();
-                for (int i = 0; i < bigger; i+=size)
+                for (double i = begining; i < end; i+=size)
                 {
                     // dodanie do listy
+                    double skala = size / 10;
                     List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                     CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                     string XYposition = calculate.FindEquasion();
-                    int X = int.Parse(XYposition.Split(",")[0]);
-                    int Y = int.Parse(XYposition.Split(",")[1]);
+                    double X = int.Parse(XYposition.Split(",")[0]);
+                    X = X*(size/skala) + xCenter;
+                    double Y = int.Parse(XYposition.Split(",")[1]);
+                    Y = yCenter- Y *(size / skala);
                     pointsGenerator.AddPoint(X, Y);
                 }
                 // utworzenie polyline i dodanie do canvas
