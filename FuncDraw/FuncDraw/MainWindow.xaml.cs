@@ -43,13 +43,26 @@ namespace FuncDraw
         }
         public void MainWindow_MouseWheelEvent(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0)
+            if (e.Delta > 0 )
             {
-                size += 1;
+                if(size < 10)
+                {
+                    size += 1;
+                }
+
+                else if (size < 100 && size >= 10)
+                {
+                    size += 10;
+                }
+                
+                
             }
             else
             {
-                size -= 1;
+                if(size > 10)
+                    size -= 10;
+                else
+                    size -= 1;
                 if (size < 1) size = 1;
             }
             GenerateGrid(sender, e);
@@ -57,8 +70,8 @@ namespace FuncDraw
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
             GridDrower grid = new GridDrower(MainGrid, size);
-            grid.DrawGrid(MainGrid, size);
-            grid.DrawAxes(MainGrid, size);
+            grid.DrawGrid();
+            grid.DrawAxes();
             for (int j = 0; j < expressions.Count; j++)
             {
                 string expression = expressions[j];

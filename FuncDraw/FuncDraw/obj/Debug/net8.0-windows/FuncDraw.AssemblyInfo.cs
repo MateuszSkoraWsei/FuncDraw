@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FuncDraw")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61950a36a207c740aa918121c8bd7281276110de")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f34c01f853f61f003dac0042d886a919ffe1e003")]
 [assembly: System.Reflection.AssemblyProductAttribute("FuncDraw")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FuncDraw")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

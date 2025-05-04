@@ -9,21 +9,22 @@ namespace FuncDraw
     {
         private readonly Canvas _mainGrid ;
         private readonly int _gridSize;
+       
 
-        public GridDrower(Canvas mainGrid, int gridSize)
+        public GridDrower(Canvas mainGrid, int GridSize)
         {
             _mainGrid = mainGrid;
-            _gridSize = gridSize;
+            
+            _gridSize = GridSize;
         }
         /// <summary>
-        /// Draws a grid on the given grid with the given size
+        /// Draws a grid on the given grid with the given _gridSize
         /// </summary>
-        /// <param name="MainGrid">localization where grid is draw</param>
-        /// <param name="gridSize">size of grid</param>
-        public void DrawGrid(Canvas MainGrid, int gridSize)
+        
+        public void DrawGrid()
         {
-            MainGrid.Children.Clear();
-            for (int i = 0; i < MainGrid.ActualWidth; i += gridSize)
+            _mainGrid.Children.Clear();
+            for (int i = 0; i < _mainGrid.ActualWidth; i += _gridSize)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
@@ -31,38 +32,37 @@ namespace FuncDraw
                 line.X1 = i;
                 line.X2 = i;
                 line.Y1 = 0;
-                line.Y2 = MainGrid.ActualHeight;
-                MainGrid.Children.Add(line);
+                line.Y2 = _mainGrid.ActualHeight;
+                _mainGrid.Children.Add(line);
             }
-            for (int i = 0; i < MainGrid.ActualHeight; i += gridSize)
+            for (int i = 0; i < _mainGrid.ActualHeight; i += _gridSize)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.StrokeThickness = 0.1;
                 line.X1 = 0;
-                line.X2 = MainGrid.ActualWidth;
+                line.X2 = _mainGrid.ActualWidth;
                 line.Y1 = i;
                 line.Y2 = i;
-                MainGrid.Children.Add(line);
+                _mainGrid.Children.Add(line);
             }
         }
         /// <summary>
-        /// Draws the axes on the given grid with the given size with little arrows at the end
+        /// Draws the axes on the given grid with the given _gridSize with little arrows at the end
         /// </summary>
-        /// <param name="MainGrid">locatization where grid is draw</param>
-        /// <param name="size">size of grid</param>
-        public void DrawAxes(Canvas MainGrid , int size)
+        
+        public void DrawAxes()
         {
             // storzenie osi x i y 
-            int xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;
-            int yCenter = (int)(Math.Floor(MainGrid.ActualHeight / size)) / 2 * size;
+            int xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize;
+            int yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize;
             Line xAxis = new Line()
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
                 X1 = 0,
                 Y1 = yCenter,
-                X2 = MainGrid.ActualWidth,
+                X2 = _mainGrid.ActualWidth,
                 Y2 = yCenter
             };
             //dodanie strzałki do osi x
@@ -70,18 +70,18 @@ namespace FuncDraw
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
-                X1 = MainGrid.ActualWidth - size,
-                Y1 = yCenter - size / 2,
-                X2 = MainGrid.ActualWidth,
+                X1 = _mainGrid.ActualWidth - _gridSize,
+                Y1 = yCenter - _gridSize / 2,
+                X2 = _mainGrid.ActualWidth,
                 Y2 = yCenter
             };
             Line xArrow2 = new Line()
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
-                X1 = MainGrid.ActualWidth - size,
-                Y1 = yCenter + size / 2,
-                X2 = MainGrid.ActualWidth,
+                X1 = _mainGrid.ActualWidth - _gridSize,
+                Y1 = yCenter + _gridSize / 2,
+                X2 = _mainGrid.ActualWidth,
                 Y2 = yCenter
             };
 
@@ -92,15 +92,15 @@ namespace FuncDraw
                 X1 = xCenter,
                 Y1 = 0,
                 X2 = xCenter,
-                Y2 = MainGrid.ActualHeight
+                Y2 = _mainGrid.ActualHeight
             };
             //dodanie strzałki do osi y
             Line yArrow1 = new Line()
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
-                X1 = xCenter - size / 2,
-                Y1 = size,
+                X1 = xCenter - _gridSize / 2,
+                Y1 = _gridSize,
                 X2 = xCenter,
                 Y2 = 0
             };
@@ -108,18 +108,102 @@ namespace FuncDraw
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
-                X1 = xCenter + size / 2,
-                Y1 = size,
+                X1 = xCenter + _gridSize / 2,
+                Y1 = _gridSize,
                 X2 = xCenter,
                 Y2 = 0
             };
 
-            MainGrid.Children.Add(xAxis);
-            MainGrid.Children.Add(yAxis);
-            MainGrid.Children.Add(xArrow1);
-            MainGrid.Children.Add(xArrow2);
-            MainGrid.Children.Add(yArrow1);
-            MainGrid.Children.Add(yArrow2);
+            _mainGrid.Children.Add(xAxis);
+            _mainGrid.Children.Add(yAxis);
+            _mainGrid.Children.Add(xArrow1);
+            _mainGrid.Children.Add(xArrow2);
+            _mainGrid.Children.Add(yArrow1);
+            _mainGrid.Children.Add(yArrow2);
+            //dodanie opisów do osi x i y
+            
+            for (int i = _gridSize; i < _mainGrid.ActualWidth - _gridSize; i += _gridSize)
+            {
+                Line line = new Line
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1,
+                    X1 = i,
+                    Y1 = yCenter - _gridSize/2,
+                    X2 = i,
+                    Y2 = yCenter + _gridSize/2
+                };
+                _mainGrid.Children.Add(line);
+                TextBlock textBlock = new TextBlock();
+                if(_gridSize < 10)
+                {
+                    if (i % 5 == 0)
+                    {
+                        textBlock.Text = (((double)i - (double)xCenter)/10).ToString();
+                    }
+                    else
+                    {
+                        textBlock.Text = "";
+                    }
+                }
+                else
+                {
+                    textBlock.Text = (((double)i - (double)xCenter) / 10).ToString();
+                }
+
+                textBlock.FontSize = _gridSize < 16 ? _gridSize : 16;
+                
+                textBlock.Foreground = Brushes.Black;
+                Canvas.SetLeft(textBlock, i);
+                Canvas.SetTop(textBlock, yCenter + 5);
+                _mainGrid.Children.Add(textBlock);
+                
+            }
+            for (int i = _gridSize; i < _mainGrid.ActualHeight - _gridSize; i += _gridSize)
+            {
+                Line line = new Line
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1,
+                    X1 = xCenter - _gridSize / 2,
+                    Y1 = i,
+                    X2 = xCenter + _gridSize / 2,
+                    Y2 = i
+                };
+                _mainGrid.Children.Add(line);
+                TextBlock textBlock = new TextBlock();
+                if(i - yCenter == 0)
+                {
+                    textBlock.Text = "";
+                }
+                else
+                {
+                    if (_gridSize < 10)
+                    {
+                        if (i % 5 == 0)
+                        {
+                            textBlock.Text = (((double)i - (double)yCenter) / 10).ToString();
+                        }
+                        else
+                        {
+                            textBlock.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        textBlock.Text = (((double)i - (double)yCenter) / 10).ToString();
+                    }
+                }
+                
+                
+                textBlock.FontSize = _gridSize < 16 ? _gridSize : 16;
+                textBlock.Foreground = Brushes.Black;
+                Canvas.SetLeft(textBlock, xCenter + 5);
+                Canvas.SetTop(textBlock, i);
+                _mainGrid.Children.Add(textBlock);
+                
+            }
+
         }
 
     }
