@@ -27,26 +27,55 @@ namespace FuncDraw
                 {
                     continue;
                 }
-                if (char.IsDigit(c) || "xyXY".Contains(c))
+                if (c == '(' )
                 {
-                    currentToken.Append(c);
+                    do
+                    {
+
+                        c = expression[i];
+                        if (i >= expression.Length)
+                        {
+                            throw new ArgumentException("Unmatched parentheses in expression.");
+                        }
+                        if (c == '(')
+                        {
+                            currentToken.Append(c);
+                        }
+                        else if (c == ')')
+                        {
+                            currentToken.Append(c);
+
+                        }
+                        else currentToken.Append(c);
+                            i++;
+                    } while (c != ')');
+
+
                 }
                 else
                 {
-                    if (currentToken.Length > 0)
+                    if (char.IsDigit(c) || "xyXY".Contains(c))
                     {
-                        tokens.Add(currentToken.ToString());
-                        currentToken.Clear();
-                    }
-                    if ("+-*/".Contains(c))
-                    {
-                        tokens.Add(c.ToString());
+                        currentToken.Append(c);
                     }
                     else
                     {
-                        throw new ArgumentException($"Invalid character '{c}' in expression.");
+                        if (currentToken.Length > 0)
+                        {
+                            tokens.Add(currentToken.ToString());
+                            currentToken.Clear();
+                        }
+                        if ("+-*/^".Contains(c))
+                        {
+                            tokens.Add(c.ToString());
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Invalid character '{c}' in expression.");
+                        }
                     }
                 }
+                
             }
             if (currentToken.Length > 0)
             {

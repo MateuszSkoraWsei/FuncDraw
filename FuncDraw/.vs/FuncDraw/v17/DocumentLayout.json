@@ -7,24 +7,24 @@
       "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\calculate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\tokenizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\tokenizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\griddrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\griddrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\polylinedrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\polylinedrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\pointsgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\pointsgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\tokenizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\tokenizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\polylinedrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\polylinedrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\griddrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|solutionrelative:funcdraw\\griddrower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AE6CF794-9372-4F32-9E90-6ADC065DA5B5}|FuncDraw\\FuncDraw.csproj|c:\\users\\mateusz\\documents\\github\\funcdraw\\funcdraw\\funcdraw\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -46,28 +46,29 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PointsGenerator.cs",
               "DocumentMoniker": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\PointsGenerator.cs",
               "RelativeDocumentMoniker": "FuncDraw\\PointsGenerator.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\PointsGenerator.cs",
               "RelativeToolTip": "FuncDraw\\PointsGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T15:41:10.912Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "PolyLineDrower.cs",
               "DocumentMoniker": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\PolyLineDrower.cs",
               "RelativeDocumentMoniker": "FuncDraw\\PolyLineDrower.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\PolyLineDrower.cs",
               "RelativeToolTip": "FuncDraw\\PolyLineDrower.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAiwDUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T15:38:00.044Z"
+              "WhenOpened": "2025-05-03T15:38:00.044Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -77,33 +78,33 @@
               "RelativeDocumentMoniker": "FuncDraw\\Calculate.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\Calculate.cs",
               "RelativeToolTip": "FuncDraw\\Calculate.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAFUAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADcAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T15:03:27.061Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Tokenizer.cs",
               "DocumentMoniker": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\Tokenizer.cs",
               "RelativeDocumentMoniker": "FuncDraw\\Tokenizer.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\Tokenizer.cs",
               "RelativeToolTip": "FuncDraw\\Tokenizer.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAUwBIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-26T21:01:47.823Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "GridDrower.cs",
               "DocumentMoniker": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\GridDrower.cs",
               "RelativeDocumentMoniker": "FuncDraw\\GridDrower.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\GridDrower.cs",
               "RelativeToolTip": "FuncDraw\\GridDrower.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAJgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-24T21:41:02.144Z",
               "EditorCaption": ""
@@ -143,13 +144,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "FuncDraw\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Mateusz\\Documents\\GitHub\\FuncDraw\\FuncDraw\\FuncDraw\\MainWindow.xaml.cs",
               "RelativeToolTip": "FuncDraw\\MainWindow.xaml.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAF8AAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAawHMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T14:28:44.674Z",
               "EditorCaption": ""

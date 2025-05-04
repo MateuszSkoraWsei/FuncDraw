@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 using Point = System.Windows.Point;
 namespace FuncDraw
 {
+    struct PointStruct
+    {
+        public double x;
+        public double y;
+        public PointStruct(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
     class PointsGenerator
     {
         

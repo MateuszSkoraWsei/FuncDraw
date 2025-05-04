@@ -23,18 +23,31 @@ namespace FuncDraw
         }
         public  void DrawPolyLine( )
         {
-            if(_points == null  || _points.Count == 0)
+            if (_points.Count < 2) return;
+
+            PathFigure pathFigure = new PathFigure
             {
-                throw new ArgumentException("Points collection cannot be null or empty.");
-            }
-            Polyline polyline = new Polyline
-            {
-                Stroke = new SolidColorBrush(_strokeColor),
-                StrokeThickness = _strokeWidth,
-                
+                StartPoint = _points[0]
             };
-            polyline.Points = [.. (IEnumerable<System.Windows.Point>)_points];
-            _canvas.Children.Add(polyline);
+
+            PolyBezierSegment bezierSegment = new PolyBezierSegment();
+            for (int i = 1; i < _points.Count; i++)
+            {
+                bezierSegment.Points.Add(_points[i]);
+            }
+
+            PathGeometry pathGeometry = new PathGeometry();
+            pathFigure.Segments.Add(bezierSegment);
+            pathGeometry.Figures.Add(pathFigure);
+
+            Path path = new Path
+            {
+                Data = pathGeometry,
+                Stroke = new SolidColorBrush(_strokeColor),
+                StrokeThickness = _strokeWidth
+            };
+            
+            _canvas.Children.Add(path);
         }
     }
 }

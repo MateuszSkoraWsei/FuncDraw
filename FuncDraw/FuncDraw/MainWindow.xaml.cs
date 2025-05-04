@@ -89,19 +89,39 @@ namespace FuncDraw
                 int end = 0 + bigger / 2;
                 
                 PointsGenerator pointsGenerator = new PointsGenerator();
-                for (double i = begining; i < end; i+=size)
+                if (correctedExpression.Contains("^"))
                 {
-                    // dodanie do listy
-                    double skala = size / 10;
-                    List<string> tokens = Tokenizer.Tokenize(correctedExpression);
-                    CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
-                    string XYposition = calculate.FindEquasion();
-                    double X = int.Parse(XYposition.Split(",")[0]);
-                    X = X*(size/skala) + xCenter;
-                    double Y = int.Parse(XYposition.Split(",")[1]);
-                    Y = yCenter- Y *(size / skala);
-                    pointsGenerator.AddPoint(X, Y);
+                    for (double i = begining; i < end; i += 1)
+                    {
+                        // dodanie do listy
+                        double skala = size / 10;
+                        List<string> tokens = Tokenizer.Tokenize(correctedExpression);
+                        CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
+                        string XYposition = calculate.FindEquasion();
+                        double X = int.Parse(XYposition.Split(",")[0]);
+                        X = X * (size / skala) + xCenter;
+                        double Y = int.Parse(XYposition.Split(",")[1]);
+                        Y = yCenter - Y * (size / skala);
+                        pointsGenerator.AddPoint(X, Y);
+                    }
                 }
+                else
+                {
+                    for (double i = begining; i < end; i += size)
+                    {
+                        // dodanie do listy
+                        double skala = size / 10;
+                        List<string> tokens = Tokenizer.Tokenize(correctedExpression);
+                        CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
+                        string XYposition = calculate.FindEquasion();
+                        double X = int.Parse(XYposition.Split(",")[0]);
+                        X = X * (size / skala) + xCenter;
+                        double Y = int.Parse(XYposition.Split(",")[1]);
+                        Y = yCenter - Y * (size / skala);
+                        pointsGenerator.AddPoint(X, Y);
+                    }
+                }
+                    
                 // utworzenie polyline i dodanie do canvas
                 PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , colors[j] , 2 );
                 polyLineDrower.DrawPolyLine();
@@ -166,7 +186,7 @@ namespace FuncDraw
 
             textBox.PreviewTextInput += (s, e) =>
             {
-                string pattern = @"^[xyXY+\-*=\/\d]+$";
+                string pattern = @"^[xyXY().+\-^*=\/\d]+$";
                 if (!Regex.IsMatch(e.Text, pattern))
                 {
                     e.Handled = true; // zapobiega dalszemu przetwarzaniu zdarzenia
@@ -176,7 +196,7 @@ namespace FuncDraw
             };
             textBox.LostFocus += (s, e) =>
             {
-                string pattern = @"^ *[xyXY] *=( *-? *\d* *[xyXY]? *[+\-*\/] *)*( *-? *\d+ *| *[xyXY] *| *\d+ *[xyXY] *)$";
+                string pattern = @"^ *[xyXY] *= *(( *\( *-?\d+(\.\d+)? *\) *|-?\d+ *( *\.\d+ *)?|[xyXY]|[xyXY] *\^ *\d+)( *[+\-*\/] *( *\( *-? *\d+(\.\d+)? *\) *| *-? *\d+(\.\d+)? *| *[xyXY] *| *[xyXY] *\^ *\d+ *))*)*( *[+\-*\/] *\(-?\d+(\.\d+)?\))*$";
                 if (!Regex.IsMatch(textBox.Text, pattern))
                 {
                     MessageBox.Show("Invalid expression format. Please use the format: x=expression or y=expression");
