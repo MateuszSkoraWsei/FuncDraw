@@ -25,7 +25,7 @@ namespace FuncDraw
     {
         public List<string> expressions = new List<string>();
         public List<Color> colors = new List<Color>();
-        public double size = 10 ;
+        public double size = 25 ;
         public int elementCounter = 1;
         public MainWindow()
         {
@@ -45,25 +45,14 @@ namespace FuncDraw
         {
             if (e.Delta > 0 )
             {
-                if(size < 10)
-                {
-                    size += 1;
-                }
+                size = size == 45 ? 25 : size += 5;
 
-                else if (size < 100 && size >= 10)
-                {
-                    size += 10;
-                }
-                
-                
+
+
             }
             else
             {
-                if(size > 10)
-                    size -= 10;
-                else
-                    size -= 1;
-                if (size < 1) size = 1;
+                size = size == 20 ? 40 : size -= 5;  
             }
             GenerateGrid(sender, e);
         }

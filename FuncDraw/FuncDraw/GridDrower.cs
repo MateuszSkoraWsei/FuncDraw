@@ -23,13 +23,23 @@ namespace FuncDraw
         
         public void DrawGrid()
         {
+            int numLine = 0;
             _mainGrid.Children.Clear();
             for (double i = 0; i < _mainGrid.ActualWidth; i += _gridSize)
             {
+                numLine++;
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
-                line.StrokeThickness = 0.1;
-                line.X1 = i;
+                if( numLine == 5)
+                {
+                    line.StrokeThickness = 0.5;
+                    numLine = 0;
+                }
+                else
+                {
+                    line.StrokeThickness = 0.1;
+                }
+                    line.X1 = i;
                 line.X2 = i;
                 line.Y1 = 0;
                 line.Y2 = _mainGrid.ActualHeight;
@@ -39,7 +49,15 @@ namespace FuncDraw
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
-                line.StrokeThickness = 0.1;
+                if (numLine == 5)
+                {
+                    line.StrokeThickness = 0.5;
+                    numLine = 0;
+                }
+                else
+                {
+                    line.StrokeThickness = 0.1;
+                }
                 line.X1 = 0;
                 line.X2 = _mainGrid.ActualWidth;
                 line.Y1 = i;
@@ -124,19 +142,10 @@ namespace FuncDraw
             
             for (double i = _gridSize; i < _mainGrid.ActualWidth - _gridSize; i += _gridSize)
             {
-                Line line = new Line
-                {
-                    Stroke = Brushes.Black,
-                    StrokeThickness = 1,
-                    X1 = i,
-                    Y1 = yCenter - _gridSize/2,
-                    X2 = i,
-                    Y2 = yCenter + _gridSize/2
-                };
-                _mainGrid.Children.Add(line);
+                
+               
                 TextBlock textBlock = new TextBlock();
-                if(_gridSize < 10)
-                {
+                
                     if (i % 5 == 0)
                     {
                         textBlock.Text = (((double)i - (double)xCenter)/10).ToString();
@@ -145,13 +154,10 @@ namespace FuncDraw
                     {
                         textBlock.Text = "";
                     }
-                }
-                else
-                {
-                    textBlock.Text = (((double)i - (double)xCenter) / 10).ToString();
-                }
+                
+                
 
-                textBlock.FontSize = _gridSize < 16 ? _gridSize : 16;
+                textBlock.FontSize = 12;
                 
                 textBlock.Foreground = Brushes.Black;
                 Canvas.SetLeft(textBlock, i);
@@ -161,16 +167,7 @@ namespace FuncDraw
             }
             for (double i = _gridSize; i < _mainGrid.ActualHeight - _gridSize; i += _gridSize)
             {
-                Line line = new Line
-                {
-                    Stroke = Brushes.Black,
-                    StrokeThickness = 1,
-                    X1 = xCenter - _gridSize / 2,
-                    Y1 = i,
-                    X2 = xCenter + _gridSize / 2,
-                    Y2 = i
-                };
-                _mainGrid.Children.Add(line);
+                
                 TextBlock textBlock = new TextBlock();
                 if(i - yCenter == 0)
                 {
@@ -178,8 +175,7 @@ namespace FuncDraw
                 }
                 else
                 {
-                    if (_gridSize < 10)
-                    {
+                    
                         if (i % 5 == 0)
                         {
                             textBlock.Text = (-1 * ((double)i - (double)yCenter) / 10).ToString();
@@ -188,15 +184,11 @@ namespace FuncDraw
                         {
                             textBlock.Text = "";
                         }
-                    }
-                    else
-                    {
-                        textBlock.Text = (-1 *((double)i - (double)yCenter) / 10).ToString();
-                    }
+                    
                 }
-                
-                
-                textBlock.FontSize = _gridSize < 16 ? _gridSize : 16;
+
+
+                textBlock.FontSize = 12;
                 textBlock.Foreground = Brushes.Black;
                 Canvas.SetLeft(textBlock, xCenter + 5);
                 Canvas.SetTop(textBlock, i);
