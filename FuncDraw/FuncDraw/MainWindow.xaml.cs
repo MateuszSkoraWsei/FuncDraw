@@ -26,6 +26,7 @@ namespace FuncDraw
         public List<string> expressions = new List<string>();
         public List<Color> colors = new List<Color>();
         public double size = 25 ;
+        public double scaleValue = 1;
         public int elementCounter = 1;
         public MainWindow()
         {
@@ -58,7 +59,7 @@ namespace FuncDraw
         }
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
-            GridDrower grid = new GridDrower(MainGrid, size);
+            GridDrower grid = new GridDrower(MainGrid, size, scaleValue);
             grid.DrawGrid();
             grid.DrawAxes();
             double xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;
