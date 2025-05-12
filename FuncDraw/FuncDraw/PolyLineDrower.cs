@@ -23,31 +23,41 @@ namespace FuncDraw
         }
         public  void DrawPolyLine( )
         {
-            if (_points.Count < 2) return;
+            
+                
+                if (_points.Count < 2) return;
 
+                // Tworzenie PathGeometry
+                
+
+            // Dodanie segmentu Béziera
             PathFigure pathFigure = new PathFigure
             {
                 StartPoint = _points[0]
             };
 
-            PolyBezierSegment bezierSegment = new PolyBezierSegment();
+            PolyLineSegment lineSegment = new PolyLineSegment();
             for (int i = 1; i < _points.Count; i++)
             {
-                bezierSegment.Points.Add(_points[i]);
+                lineSegment.Points.Add(_points[i]);
             }
 
+            pathFigure.Segments.Add(lineSegment);
+
             PathGeometry pathGeometry = new PathGeometry();
-            pathFigure.Segments.Add(bezierSegment);
             pathGeometry.Figures.Add(pathFigure);
 
+
+            // Tworzenie Path
             Path path = new Path
-            {
-                Data = pathGeometry,
-                Stroke = new SolidColorBrush(_strokeColor),
-                StrokeThickness = _strokeWidth
-            };
-            
-            _canvas.Children.Add(path);
-        }
+                {
+                    Data = pathGeometry,
+                    Stroke = new SolidColorBrush(_strokeColor),
+                    StrokeThickness = _strokeWidth
+                };
+
+                _canvas.Children.Add(path);
+            }
+        
     }
 }

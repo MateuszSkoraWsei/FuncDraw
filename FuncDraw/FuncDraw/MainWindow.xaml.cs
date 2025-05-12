@@ -23,11 +23,12 @@ namespace FuncDraw
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<string> expressions = new List<string>();
-        public List<Color> colors = new List<Color>();
+        public Dictionary<string, object> Expressions = new Dictionary<string, object>();
+        
         public double size = 25 ;
         public double scaleValue = 1;
-        public int elementCounter = 1;
+        
+        public int expressionCounter = 1;
         
         
         public MainWindow()
@@ -92,13 +93,18 @@ namespace FuncDraw
             grid.DrawAxes();
             double xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;
             double yCenter = (int)(Math.Floor(MainGrid.ActualHeight / size)) / 2 * size;
-            for (int j = 0; j < expressions.Count; j++)
+            foreach(var expression in Expressions)
             {
-                string expression = expressions[j];
-                string correctedExpression = expression.Split('=')[1];
+
+
+
+                dynamic expressionData = expression.Value;
+                string wyrazenie = expressionData.expresion;
+                Color color = expressionData.color;
+                string correctedExpression = wyrazenie.Split('=')[1];
                 
                 
-                string output = expression.Split('=')[0].Trim();
+                string output = wyrazenie.Split('=')[0].Trim();
                 int x = (int)(MainGrid.ActualWidth);
                 int y = (int)(MainGrid.ActualHeight);
                 int bigger = x > y ? x : y;
@@ -112,14 +118,14 @@ namespace FuncDraw
                     for (double i = begining; i < end; i += 1)
                     {
                         // dodanie do listy
-                        double skala = size / 10;
+                        double skala = size / scaleValue;
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
                         double X = int.Parse(XYposition.Split(",")[0]);
-                        X = X * (size / skala) + xCenter;
+                        X = X * (skala) + xCenter;
                         double Y = int.Parse(XYposition.Split(",")[1]);
-                        Y = yCenter - Y * (size / skala);
+                        Y = yCenter - Y * (skala);
                         pointsGenerator.AddPoint(X, Y);
                     }
                 }
@@ -128,20 +134,20 @@ namespace FuncDraw
                     for (double i = begining; i < end; i += size)
                     {
                         // dodanie do listy
-                        double skala = size / 10;
+                        double skala = size / scaleValue;
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
                         double X = int.Parse(XYposition.Split(",")[0]);
-                        X = X * (size / skala) + xCenter;
+                        X = X * (skala) + xCenter;
                         double Y = int.Parse(XYposition.Split(",")[1]);
-                        Y = yCenter - Y * (size / skala);
+                        Y = yCenter - Y * (skala);
                         pointsGenerator.AddPoint(X, Y);
                     }
                 }
                     
                 // utworzenie polyline i dodanie do canvas
-                PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , colors[j] , 2 );
+                PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , color , 2 );
                 polyLineDrower.DrawPolyLine();
 
 
@@ -179,16 +185,17 @@ namespace FuncDraw
                 Margin = new Thickness(5),
                 
             };
-            
-            
+
+
             Button createBtn = new Button()
             {
+                Name = $"b{expressionCounter}",
                 Content = "✔",
                 Width = 20,
                 Height = 20,
                 Margin = new Thickness(5),
-                
-                
+
+
             };
             
 
@@ -227,15 +234,16 @@ namespace FuncDraw
                    
                 }
             };
-            
 
+            #region createExpressions
             //dodanie eventu do przycisku createBtn
 
 
             createBtn.Click += (s, e) =>
             {
-                expressions.Add(textBox.Text);
-                colors.Add(color);
+                
+                Expressions.Add($"Expression{createBtn.Name.Substring(1)}", new { expresion = textBox.Text, color = color });
+                
                 int index = ExpressionContainer.Children.IndexOf(border);
                 // stworzenie stackPanelu FunctionDisplay$ - wyświetlenie informacji o utworzonej funkcji  
                 StackPanel functionDisplay = new StackPanel()
@@ -247,7 +255,7 @@ namespace FuncDraw
                 };
                 Shape square = new System.Windows.Shapes.Rectangle()
                 {
-                    Name = $"Square{elementCounter}",
+                    Name = $"Square{expressionCounter}",
                     Width = 20,
                     Height = 20,
                     Fill = new System.Windows.Media.SolidColorBrush(color),
@@ -256,7 +264,7 @@ namespace FuncDraw
 
                 Label lblFuntion = new Label()
                 {
-                    Name = $"LabelFunction{elementCounter}",
+                    Name = $"LabelFunction{expressionCounter}",
                     Content = textBox.Text,
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
@@ -268,7 +276,7 @@ namespace FuncDraw
 
                 Button menuButton = new Button()
                 {
-                    Name = $"MenuButton{elementCounter}",
+                    Name = $"MB{expressionCounter}",
                     Content = "...",
                     Width = 20,
                     Height = 20,
@@ -283,7 +291,7 @@ namespace FuncDraw
                 ExpressionContainer.Children.Insert(index ,functionDisplay);
 
                 //dodanie eventu do przycisku menuButton
-
+                expressionCounter++;
                 menuButton.Click += (s, e) =>
                 {
                     //dodanie menu kontekstowego
@@ -293,10 +301,14 @@ namespace FuncDraw
                     {
                         if( menuButton.Parent is StackPanel funcitonDisplay )
                         {
+                           
                             ExpressionContainer.Children.Remove(funcitonDisplay);
+                            Expressions.Remove($"Expression{menuButton.Name.Substring(2)}");
+                            
+
                         }
-                        
-                        
+
+
                     };
                     MenuItem editItem = new MenuItem() { Header = "Edit" , Icon = "e"};
                     editItem.Click += (s, e) =>
@@ -322,7 +334,7 @@ namespace FuncDraw
                 ExpressionContainer.Children.Insert(index + 1, AddBtn);
                 AddBtn.Visibility = Visibility.Visible;
             };
-            
+            #endregion
 
             //dodawanie eventu do przycisku setColor
             setColor.Click += (s, e) =>
@@ -334,7 +346,7 @@ namespace FuncDraw
                     setColor.Background = new System.Windows.Media.SolidColorBrush(color);
                 }
             };
-
+            
 
         }
         public void testAdd(object sender, RoutedEventArgs e)
