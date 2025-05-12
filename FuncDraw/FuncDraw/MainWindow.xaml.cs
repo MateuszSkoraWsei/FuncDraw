@@ -28,6 +28,8 @@ namespace FuncDraw
         public double size = 25 ;
         public double scaleValue = 1;
         public int elementCounter = 1;
+        
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -37,6 +39,7 @@ namespace FuncDraw
             
 
         }
+        
         private void ShowHideBtn_Click(object sender, RoutedEventArgs e)
         {
            editor.Width = editor.Width == new GridLength(20) ?  new GridLength(200) : new GridLength(20);
@@ -46,14 +49,39 @@ namespace FuncDraw
         {
             if (e.Delta > 0 )
             {
-                size = size == 45 ? 25 : size += 5;
+                
 
+                if(size == 45)
+                {
+                    size = 25;
+                    
+                    scaleValue = (scaleValue.ToString().Contains("2")) ? scaleValue *2.5 : scaleValue * 2;
+                    
 
+                }
+                else
+                {
+                    size += 5;
+                }
 
             }
             else
             {
-                size = size == 20 ? 40 : size -= 5;  
+                
+                if (size == 25)
+                {
+                    size = 45;
+                    scaleValue = (scaleValue.ToString().Contains("5")) ? scaleValue / 2.5 : scaleValue / 2;
+
+
+                }
+                else
+                {
+                    size -= 5;
+                }
+
+                    
+
             }
             GenerateGrid(sender, e);
         }

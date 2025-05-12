@@ -198,8 +198,8 @@ namespace FuncDraw
 
                 if (numLine  % 6 == 0 )
                     {
-                        tb_Right.Text = (0 + tempScaleValue - 1 ).ToString();
-                        tb_Left.Text = (0 - tempScaleValue + 1).ToString();
+                        tb_Right.Text = (0 + tempScaleValue - _scaleValue ).ToString();
+                        tb_Left.Text = (0 - tempScaleValue + _scaleValue).ToString();
                     numLine = 1;
                     }
                     else
@@ -246,8 +246,8 @@ namespace FuncDraw
                     
                         if (numLine % 6 == 0)
                         {
-                        tb_Top.Text = (0 + tempScaleValue - 1  ).ToString();
-                        tb_Bottom.Text = (0 - tempScaleValue + 1).ToString();
+                        tb_Top.Text = (0 + tempScaleValue - _scaleValue  ).ToString();
+                        tb_Bottom.Text = (0 - tempScaleValue + _scaleValue).ToString();
                         numLine = 1;
                         }
                         else
