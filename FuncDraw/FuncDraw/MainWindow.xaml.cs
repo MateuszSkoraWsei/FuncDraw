@@ -26,7 +26,7 @@ namespace FuncDraw
         public Dictionary<string, object> Expressions = new Dictionary<string, object>();
         
         public double size = 25 ;
-        public double scaleValue = 1;
+        public double scaleValue = 0.25;
         
         public int expressionCounter = 1;
         
@@ -48,16 +48,16 @@ namespace FuncDraw
         }
         public void MainWindow_MouseWheelEvent(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0 )
+            if (e.Delta <= 0 )
             {
                 
 
                 if(size == 45)
                 {
                     size = 25;
-                    
-                    scaleValue = (scaleValue.ToString().Contains("2")) ? scaleValue *2.5 : scaleValue * 2;
-                    
+
+                    scaleValue = (scaleValue.ToString().Contains("2")) ? scaleValue * 2.5 : scaleValue * 2;
+
 
                 }
                 else
@@ -105,47 +105,50 @@ namespace FuncDraw
                 
                 
                 string output = wyrazenie.Split('=')[0].Trim();
+                double skala = size / scaleValue;
+
                 int x = (int)(MainGrid.ActualWidth);
                 int y = (int)(MainGrid.ActualHeight);
                 int bigger = x > y ? x : y;
                 // stworzneie pętli 
-                int begining = 0 - bigger / 2;
-                int end = 0 + bigger / 2;
+                double begining = Math.Ceiling(-5 - (bigger / 2) / size) * scaleValue;
+                double end = begining * (-1);
                 
+
                 PointsGenerator pointsGenerator = new PointsGenerator();
                 if (correctedExpression.Contains("^"))
                 {
-                    for (double i = begining; i < end; i += 1)
+                    for (double i = begining; i < end; i += (scaleValue/2))
                     {
                         // dodanie do listy
-                        double skala = size / scaleValue;
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
-                        double X = int.Parse(XYposition.Split(",")[0]);
-                        X = X * (skala) + xCenter;
-                        double Y = int.Parse(XYposition.Split(",")[1]);
-                        Y = yCenter - Y * (skala);
-                        pointsGenerator.AddPoint(X, Y);
+                        double X = double.Parse(XYposition.Split(":")[0]);
+                        X = X * skala + xCenter;
+                        double Y = double.Parse(XYposition.Split(":")[1]);
+                        Y =  yCenter - Y * skala;
+                        pointsGenerator.AddPoint(X,Y);
+                        
                     }
                 }
+
                 else
                 {
-                    for (double i = begining; i < end; i += size)
+                    for (double i = begining; i < end; i += (scaleValue))
                     {
                         // dodanie do listy
-                        double skala = size / scaleValue;
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
-                        double X = int.Parse(XYposition.Split(",")[0]);
-                        X = X * (skala) + xCenter;
-                        double Y = int.Parse(XYposition.Split(",")[1]);
-                        Y = yCenter - Y * (skala);
+                        double X = double.Parse(XYposition.Split(":")[0]);
+                        X = X * skala + xCenter;
+                        double Y = double.Parse(XYposition.Split(":")[1]);
+                        Y = yCenter - Y * skala;
                         pointsGenerator.AddPoint(X, Y);
                     }
                 }
-                    
+
                 // utworzenie polyline i dodanie do canvas
                 PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , color , 2 );
                 polyLineDrower.DrawPolyLine();

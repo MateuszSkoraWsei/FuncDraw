@@ -12,7 +12,7 @@ namespace FuncDraw
         public int MaxPriority = 0;
         public int actualPriority = 0;
         public List<int> priorityTable = new List<int>(); // Fixed the error by initializing the list properly.  
-        public long result = 0;
+        public double result = 0;
         private double x;
         private double y;
         private List<string> tokens;
@@ -76,7 +76,7 @@ namespace FuncDraw
                             else
                             {
                                 int index = tokens[i].IndexOf("x");
-                                int multiplaier = int.Parse(tokens[i].Substring(0, index));
+                                double multiplaier = double.Parse(tokens[i].Substring(0, index));
 
                                 tokens[i] = multiplaier.ToString();
                                 tokens.Insert(i + 1, "*");
@@ -103,7 +103,7 @@ namespace FuncDraw
                             {
                                 // Find the index of 'y' in the token
                                 int index = tokens[i].IndexOf("y");
-                                int multiplaier = int.Parse(tokens[i].Substring(0, index));
+                                double multiplaier = double.Parse(tokens[i].Substring(0, index));
 
                                 tokens[i] = multiplaier.ToString();
                                 tokens.Insert(i + 1, "*");
@@ -189,7 +189,7 @@ namespace FuncDraw
                             }
                         else if (tokens[Counter] == "^")
                         {
-                            result = Convert.ToInt64(Math.Pow(Convert.ToDouble(tokens[Counter - 1]), Convert.ToDouble(tokens[Counter + 1])));
+                            result = Math.Pow(Convert.ToDouble(tokens[Counter - 1]), Convert.ToDouble(tokens[Counter + 1]));
                         }
 
 
@@ -211,11 +211,11 @@ namespace FuncDraw
             }
             if(output == "x" || output == "X")
             {
-                return $"{tokens[0]},{y}";
+                return $"{tokens[0]}:{y}";
             }
             else if (output == "y" || output == "Y")
             {
-                return $"{y},{tokens[0]}";
+                return $"{y}:{tokens[0]}";
             }
             else
             {
