@@ -26,7 +26,7 @@ namespace FuncDraw
         public Dictionary<string, object> Expressions = new Dictionary<string, object>();
         
         public double size = 25 ;
-        public double scaleValue = 0.25;
+        public double scaleValue = 1;
         
         public int expressionCounter = 1;
         
@@ -224,7 +224,8 @@ namespace FuncDraw
             };
             textBox.LostFocus += (s, e) =>
             {
-                string pattern = @"^ *[xyXY] *= *(( *\( *-?\d+(\.\d+)? *\) *|-?\d+ *( *\.\d+ *)?|[xyXY]|[xyXY] *\^ *\d+)( *[+\-*\/] *( *\( *-? *\d+(\.\d+)? *\) *| *-? *\d+(\.\d+)? *| *[xyXY] *| *[xyXY] *\^ *\d+ *))*)*( *[+\-*\/] *\(-?\d+(\.\d+)?\))*$";
+                //string pattern = @"^ *[xyXY] *= *(( *\( *-?\d+(\.\d+)? *\) *|-?\d+ *( *\.\d+ *)?|[xyXY]|[xyXY] *\^ *\d+)( *[+\-*\/] *( *\( *-? *\d+(\.\d+)? *\) *| *-? *\d+(\.\d+)? *| *[xyXY] *| *[xyXY] *\^ *\d+ *))*)*( *[+\-*\/] *\(-?\d+(\.\d+)?\))*$";
+                string pattern = @"^\s*[xyXY]\s*=\s*(-?\s*)?((\d+(\.\d+)?|[xyXY]|\([^()]+\))(\s*\^?\s*\d*)?)(\s*[-+*\/]?\s*(-?\s*(\d+(\.\d+)?|[xyXY]|\([^()]+\))(\s*\^?\s*\d*)?))*\s*$";
                 if (!Regex.IsMatch(textBox.Text, pattern))
                 {
                     MessageBox.Show("Invalid expression format. Please use the format: x=expression or y=expression");
