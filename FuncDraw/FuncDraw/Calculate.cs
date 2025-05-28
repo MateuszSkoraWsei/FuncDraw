@@ -173,19 +173,19 @@ namespace FuncDraw
                         
                             if (tokens[Counter] == "*")
                             {
-                                result = Convert.ToInt64(tokens[Counter - 1]) * Convert.ToInt32(tokens[Counter + 1]);
+                                result = Convert.ToDouble(tokens[Counter - 1]) * Convert.ToDouble(tokens[Counter + 1]);
                             }
                             else if (tokens[Counter] == "/")
                             {
-                                result = Convert.ToInt64(tokens[Counter - 1]) / Convert.ToInt32(tokens[Counter + 1]);
+                                result = Convert.ToDouble(tokens[Counter - 1]) / Convert.ToDouble(tokens[Counter + 1]);
                             }
                             else if (tokens[Counter] == "-")
                             {
-                                result = Convert.ToInt64(tokens[Counter - 1]) - Convert.ToInt32(tokens[Counter + 1]);
+                                result = Convert.ToDouble(tokens[Counter - 1]) - Convert.ToDouble(tokens[Counter + 1]);
                             }
                             else if (tokens[Counter] == "+")
                             {
-                                result = Convert.ToInt64(tokens[Counter - 1]) + Convert.ToInt32(tokens[Counter + 1]);
+                                result = Convert.ToDouble(tokens[Counter - 1]) + Convert.ToDouble(tokens[Counter + 1]);
                             }
                         else if (tokens[Counter] == "^")
                         {

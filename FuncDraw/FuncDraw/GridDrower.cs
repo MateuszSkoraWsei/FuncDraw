@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Brushes = System.Windows.Media.Brushes;
+using Point = System.Windows.Point;
 
 namespace FuncDraw
 {
@@ -12,13 +13,19 @@ namespace FuncDraw
         private readonly double _scaleValue;
         private double _xCenter;
         private double _yCenter;
+        private Point _przesuniecie;
+        
 
-        public GridDrower(Canvas mainGrid, double GridSize, double ScaleValue)
+
+        public GridDrower(Canvas mainGrid, double GridSize, double ScaleValue, Point przesuniecie)
         {
             _mainGrid = mainGrid;
             
             _gridSize = GridSize;
             _scaleValue = ScaleValue;
+            _przesuniecie = przesuniecie;
+
+
         }
         
         /// <summary>
@@ -27,13 +34,14 @@ namespace FuncDraw
         
         public void DrawGrid()
         {
-            double xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize;
-             double yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize;
+            double xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize + _przesuniecie.X;
+            double yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize + _przesuniecie.Y;
             int xnumLine = 0;
             int ynumLine = 0;
             _mainGrid.Children.Clear();
             #region background Grid
-            for (double i = _gridSize; i <= xCenter + _gridSize; i += _gridSize)
+            double BiggerWidth = (_mainGrid.ActualWidth - xCenter + _gridSize) > (xCenter + _gridSize) ? (_mainGrid.ActualWidth - xCenter + _gridSize) : (xCenter + _gridSize);
+            for (double i = _gridSize; i <= BiggerWidth; i += _gridSize)
             {
                 xnumLine++;
                 Line line = new Line();
@@ -47,7 +55,7 @@ namespace FuncDraw
                 {
                     line.StrokeThickness = 0.1;
                 }
-                    line.X1 = xCenter +i;
+                line.X1 = xCenter + i;
                 line.X2 = xCenter + i;
                 line.Y1 = 0;
                 line.Y2 = _mainGrid.ActualHeight;
@@ -69,7 +77,8 @@ namespace FuncDraw
                 line2.Y2 = _mainGrid.ActualHeight;
                 _mainGrid.Children.Add(line2);
             }
-            for (double i = _gridSize; i <= yCenter +_gridSize; i += _gridSize)
+            double BiggerHeight = (_mainGrid.ActualHeight- yCenter + _gridSize) > (yCenter + _gridSize) ? (_mainGrid.ActualHeight - yCenter + _gridSize) : (yCenter + _gridSize);
+            for (double i = _gridSize; i <= BiggerHeight; i += _gridSize)
             {
                 ynumLine++;
                 Line line = new Line();
@@ -115,10 +124,11 @@ namespace FuncDraw
         public void DrawAxes()
         {
             // storzenie osi x i y 
-            double xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize;
-             double yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize;
+            double xCenter = (int)(Math.Floor(_mainGrid.ActualWidth / _gridSize)) / 2 * _gridSize + _przesuniecie.X;
+            double yCenter = (int)(Math.Floor(_mainGrid.ActualHeight / _gridSize)) / 2 * _gridSize + _przesuniecie.Y;
 
-        Line xAxis = new Line()
+
+            Line xAxis = new Line()
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
@@ -188,7 +198,8 @@ namespace FuncDraw
             //dodanie opisów do osi x i y
             double tempScaleValue = _scaleValue;
             int numLine = 1;
-            for (double i = xCenter; i < _mainGrid.ActualWidth - _gridSize; i += _gridSize)
+            double biggerWidth = (_mainGrid.ActualWidth - xCenter + _gridSize) > (xCenter + _gridSize) ? (_mainGrid.ActualWidth - xCenter + _gridSize) : (xCenter + _gridSize);
+            for (double i = 0; i < biggerWidth; i += _gridSize)
             {
                 
                
@@ -200,9 +211,9 @@ namespace FuncDraw
                     {
                         tb_Right.Text = (0 + tempScaleValue - _scaleValue ).ToString();
                         tb_Left.Text = (0 - tempScaleValue + _scaleValue).ToString();
-                    numLine = 1;
+                        numLine = 1;
                     }
-                    else
+                else
                     {
                         tb_Right.Text = "";
                         tb_Left.Text = "";
@@ -216,13 +227,13 @@ namespace FuncDraw
                 
                 tb_Right.Foreground = Brushes.Black;
                 
-                Canvas.SetLeft(tb_Right, i);
+                Canvas.SetLeft(tb_Right, i + xCenter);
                 Canvas.SetTop(tb_Right, yCenter + 5);
                 _mainGrid.Children.Add(tb_Right);
                 tb_Left.FontSize = 12;
                 tb_Left.Foreground = Brushes.Black;
                 
-                Canvas.SetLeft(tb_Left, xCenter - ( i - xCenter ));
+                Canvas.SetLeft(tb_Left, xCenter -  i  );
                 Canvas.SetTop(tb_Left, yCenter + 5);
                 _mainGrid.Children.Add(tb_Left);
 
@@ -232,7 +243,9 @@ namespace FuncDraw
             }
             tempScaleValue = _scaleValue;
             numLine = 1;
-            for (double i = yCenter; i < _mainGrid.ActualHeight - _gridSize; i += _gridSize)
+
+            double biggerHeight = (_mainGrid.ActualHeight - yCenter + _gridSize) > (yCenter + _gridSize) ? (_mainGrid.ActualHeight - yCenter + _gridSize) : (yCenter + _gridSize);
+            for (double i = 0; i < biggerHeight; i += _gridSize)
             {
                 
                 TextBlock tb_Top = new TextBlock();
@@ -263,9 +276,9 @@ namespace FuncDraw
                 tb_Bottom.FontSize = 12;
                 tb_Bottom.Foreground = Brushes.Black;
                 Canvas.SetLeft(tb_Top, xCenter + 5);
-                Canvas.SetTop(tb_Top, i);
+                Canvas.SetTop(tb_Top, i + yCenter);
                 Canvas.SetLeft(tb_Bottom, xCenter + 5);
-                Canvas.SetTop(tb_Bottom, yCenter - (i - yCenter) );
+                Canvas.SetTop(tb_Bottom, yCenter - i );
                 _mainGrid.Children.Add(tb_Top);
                 _mainGrid.Children.Add(tb_Bottom);
                 numLine++;

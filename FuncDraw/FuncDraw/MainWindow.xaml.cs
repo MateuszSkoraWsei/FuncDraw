@@ -15,6 +15,8 @@ using Label = System.Windows.Controls.Label;
 using MessageBox = System.Windows.MessageBox;
 using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
+using Cursors = System.Windows.Input.Cursors;
+using System.IO;
 
 namespace FuncDraw
 {
@@ -23,7 +25,9 @@ namespace FuncDraw
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public Dictionary<string, object> Expressions = new Dictionary<string, object>();
+        public Point przesuniecie = new Point(0,0);
         
         public double size = 25 ;
         public double scaleValue = 1;
@@ -37,6 +41,28 @@ namespace FuncDraw
             ShowHideBtn.Click += ShowHideBtn_Click;
             MainGrid.SizeChanged += GenerateGrid;
             AddBtn.Click += GenerateExpresionCreator;
+            if (File.Exists(".\\zapisaneWyrazenia.txt"))
+            {
+                string[] zawartość = File.ReadAllLines(".\\zapisaneWyrazenia.txt");
+                if(zawartość.Length == 0)
+                {
+                    return;
+                }
+                foreach (string linia in zawartość)
+                {
+                    string[] dane = linia.Split(';');
+                    if (dane.Length == 3)
+                    {
+                        string name = dane[0];
+                        string expresion = dane[1];
+                        Color color = (Color)System.Windows.Media.ColorConverter.ConvertFromString(dane[2]);
+                        
+                        Expressions.Add(name, new {expresion =  expresion, color = color });
+                        
+                    }
+                }
+                
+            }
             
 
         }
@@ -86,9 +112,9 @@ namespace FuncDraw
             }
             GenerateGrid(sender, e);
         }
-        public void GenerateGrid(object sender, RoutedEventArgs e)
+        public void GenerateGrid(object sender, RoutedEventArgs e )
         {
-            GridDrower grid = new GridDrower(MainGrid, size, scaleValue);
+            GridDrower grid = new GridDrower(MainGrid, size, scaleValue, przesuniecie);
             grid.DrawGrid();
             grid.DrawAxes();
             double xCenter = (int)(Math.Floor(MainGrid.ActualWidth / size)) / 2 * size;
@@ -107,27 +133,27 @@ namespace FuncDraw
                 string output = wyrazenie.Split('=')[0].Trim();
                 double skala = size / scaleValue;
 
-                int x = (int)(MainGrid.ActualWidth);
-                int y = (int)(MainGrid.ActualHeight);
-                int bigger = x > y ? x : y;
+                double x = (int)(MainGrid.ActualWidth) ;
+                double y = (int)(MainGrid.ActualHeight) ;
+                double bigger = x > y ? (x  +(przesuniecie.X < 0 ? przesuniecie.X * (-1) : przesuniecie.X)) : (y + +(przesuniecie.Y < 0 ? przesuniecie.Y * (-1) : przesuniecie.Y));
                 // stworzneie pętli 
-                double begining = Math.Ceiling(-5 - (bigger / 2) / size) * scaleValue;
-                double end = begining * (-1);
+                double begining = Math.Ceiling(-  bigger  / size) * scaleValue - scaleValue * 5;
+                double end = begining * (-1) + scaleValue * 5;
                 
 
                 PointsGenerator pointsGenerator = new PointsGenerator();
                 if (correctedExpression.Contains("^"))
                 {
-                    for (double i = begining; i < end; i += (scaleValue/2))
+                    for (double i = begining; i < end; i += (scaleValue/5))
                     {
                         // dodanie do listy
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
                         double X = double.Parse(XYposition.Split(":")[0]);
-                        X = X * skala + xCenter;
+                        X = X * skala + xCenter + przesuniecie.X;
                         double Y = double.Parse(XYposition.Split(":")[1]);
-                        Y =  yCenter - Y * skala;
+                        Y =  yCenter - Y * skala + przesuniecie.Y;
                         pointsGenerator.AddPoint(X,Y);
                         
                     }
@@ -142,9 +168,9 @@ namespace FuncDraw
                         CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
                         string XYposition = calculate.FindEquasion();
                         double X = double.Parse(XYposition.Split(":")[0]);
-                        X = X * skala + xCenter;
+                        X = X * skala + xCenter + przesuniecie.X;
                         double Y = double.Parse(XYposition.Split(":")[1]);
-                        Y = yCenter - Y * skala;
+                        Y = yCenter - Y * skala + przesuniecie.Y;
                         pointsGenerator.AddPoint(X, Y);
                     }
                 }
@@ -369,5 +395,78 @@ namespace FuncDraw
             ExpressionContainer.Children.Add(test1);
         }
 
+
+        #region przesuwanie po wykresie
+        public Point StartPosition;
+        public Point EndPosition;
+        public bool isDragging = false;
+        private void Canvas_LeftBtn_Down(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                MainGrid.Cursor = Cursors.Hand; 
+                StartPosition = e.GetPosition(MainGrid);
+                isDragging = true;
+                MainGrid.CaptureMouse();
+            }
+            else
+            {
+                isDragging = false;
+            }
+        }
+        private void Canvas_Mouse_Move(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                EndPosition = e.GetPosition(MainGrid);
+                przesuniecie.X += EndPosition.X - StartPosition.X;
+                przesuniecie.Y += EndPosition.Y - StartPosition.Y;
+                StartPosition = EndPosition;
+                GenerateGrid(sender, e);
+            }
+
+        }
+
+        
+
+        private void Canvas_LeftBtn_Up(object sender, MouseButtonEventArgs e)
+        {
+            if (isDragging){
+                isDragging = false;
+                
+                //MessageBox.Show($"X: {przesuniecie.X}, Y: {przesuniecie.Y}");
+                MainGrid.ReleaseMouseCapture();
+                
+            }
+            
+        }
+        #endregion
+
+        private void btnCentroj_Click(object sender, RoutedEventArgs e)
+        {
+            przesuniecie = new Point(0, 0);
+            GenerateGrid(sender, e);
+        }
+
+        private void btnSkala_Click(object sender, RoutedEventArgs e)
+        {
+            scaleValue = 1;
+            size = 25;
+            GenerateGrid(sender, e);
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var expression in Expressions)
+            {
+                dynamic expressionData = expression.Value;
+                string wyrazenie = expressionData.expresion;
+                Color color = expressionData.color;
+                string name = expression.Key;
+
+                File.AppendAllText(".\\zapisaneWyrazenia.txt", $"{name};{wyrazenie};{color}\n");
+
+            }
+        }
     }
 }
