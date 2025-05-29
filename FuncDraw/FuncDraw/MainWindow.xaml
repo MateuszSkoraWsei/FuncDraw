@@ -35,7 +35,28 @@
                     <StackPanel x:Name="ExpressionContainer" Grid.Column="1" Grid.Row="0" />
                     <Button Content="Centrój" x:Name="btnCentroj" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="160" Click="btnCentroj_Click"/>
                     <Button Content="Skala Domyślna" x:Name="btnSkala" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Width="160" RenderTransformOrigin="0.231,0.752" Click="btnSkala_Click"/>
-                    <Button Content="Zapisz" x:Name="btnSave" HorizontalAlignment="Center" Margin="0,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.231,0.752" Click="btnSave_Click"/>
+                    <Button Content="Zapisz" x:Name="btnSave" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.231,0.752" Click="btnSave_Click">
+
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                    <Button Content="Otwórz" x:Name="btnOpen" HorizontalAlignment="Left" Margin="100,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.231,0.752" Click="btnOpen_Click">
+
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
 
                 </Grid>
 
