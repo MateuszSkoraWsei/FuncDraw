@@ -133,8 +133,16 @@ namespace FuncDraw
                         X = X * skala + xCenter + przesuniecie.X;
                         double Y = double.Parse(XYposition.Split(":")[1]);
                         Y =  yCenter - Y * skala + przesuniecie.Y;
-                        pointsGenerator.AddPoint(X,Y);
-                        
+                        if(X < -50 || X > MainGrid.ActualWidth + 50 || Y < -50 || Y > MainGrid.ActualHeight + 50)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            pointsGenerator.AddPoint(X, Y);
+
+                        }
+
                     }
                 }
 
@@ -150,7 +158,15 @@ namespace FuncDraw
                         X = X * skala + xCenter + przesuniecie.X;
                         double Y = double.Parse(XYposition.Split(":")[1]);
                         Y = yCenter - Y * skala + przesuniecie.Y;
-                        pointsGenerator.AddPoint(X, Y);
+                        if (X < -50 || X > MainGrid.ActualWidth + 50 || Y < -50 || Y > MainGrid.ActualHeight + 50)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            pointsGenerator.AddPoint(X, Y);
+
+                        }
                     }
                 }
 
@@ -164,10 +180,10 @@ namespace FuncDraw
         }
         public void GenerateExpresionCreator(object sender, RoutedEventArgs e)
         {
-            exprCreator expressionCreator = new exprCreator( AddBtn , ExpressionContainer , expressionCounter);
+            exprCreator expressionCreator = new exprCreator( AddBtn , ExpressionContainer , expressionCounter, () => GenerateGrid(sender,e));
             expressionCreator.ExpressionCreator(Expressions );
             expressionCounter++;
-            GenerateGrid(sender,e);
+            
 
 
         }
@@ -303,7 +319,7 @@ namespace FuncDraw
                             Color color = (Color)System.Windows.Media.ColorConverter.ConvertFromString(dane[2]);
 
                             Expressions.Add(name, new { expresion = expresion, color = color });
-                            exprCreator expressionCreator = new exprCreator(AddBtn, ExpressionContainer, expressionCounter);
+                            exprCreator expressionCreator = new exprCreator(AddBtn, ExpressionContainer, expressionCounter, () => GenerateGrid(sender, e));
                             expressionCreator.ShowSaveExpression(name, expresion, color, Expressions);
                             expressionCounter = int.Parse(name.Substring(10));
 

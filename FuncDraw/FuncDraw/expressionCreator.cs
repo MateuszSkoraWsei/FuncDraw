@@ -31,18 +31,19 @@ namespace FuncDraw
         private Button _addBtn;
         private StackPanel _expressionContainer;
         private int _expressionCounter ;
-        
-        
+
+        private readonly Action _refreshGrid;
 
 
-        public exprCreator(  Button addBtn , StackPanel expressionContainer , int expressionCounter = 1 )
+        public exprCreator(  Button addBtn , StackPanel expressionContainer , int expressionCounter , Action refreshGrid )
         {
             
            
             this._addBtn = addBtn;
             this._expressionContainer = expressionContainer;
             this._expressionCounter = expressionCounter;
-            
+            this._refreshGrid = refreshGrid;
+
 
 
         }
@@ -131,6 +132,7 @@ namespace FuncDraw
                     expressions.Add($"Expression{createBtn.Name.Substring(1)}", new { expresion = textBox.Text, color = color });
                 }
                 ShowExpression(createBtn, textBox, color, expressions, border);
+                _refreshGrid?.Invoke();
             };
             setColor.Click += (s, e) =>
             {
@@ -204,7 +206,7 @@ namespace FuncDraw
 
                         _expressionContainer.Children.Remove(funcitonDisplay);
                         expressions.Remove($"Expression{menuButton.Name.Substring(2)}");
-
+                        _refreshGrid?.Invoke();
 
                     }
 
@@ -305,7 +307,7 @@ namespace FuncDraw
 
                         _expressionContainer.Children.Remove(funcitonDisplay);
                         expressions.Remove($"Expression{menuButton.Name.Substring(2)}");
-
+                        _refreshGrid?.Invoke();
 
                     }
 
@@ -338,7 +340,7 @@ namespace FuncDraw
                 parent.Children.Remove(_addBtn);
             }
 
-            _expressionContainer.Children.Insert(index + 1, _addBtn);
+            _expressionContainer.Children.Add( _addBtn);
             _addBtn.Visibility = Visibility.Visible;
 
         }
@@ -426,6 +428,7 @@ namespace FuncDraw
                 ShowExpression(createBtn, textBox, color, expressions, border);
                 border.Visibility = Visibility.Collapsed;
                 _addBtn.Visibility = Visibility.Visible;
+                _refreshGrid?.Invoke();
             };
             setColor.Click += (s, e) =>
             {
