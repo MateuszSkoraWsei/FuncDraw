@@ -39,3 +39,4 @@ C:\Users\Mateusz\Documents\GitHub\FuncDraw\FuncDraw\FuncDraw\obj\Debug\net8.0-wi
 C:\Users\Mateusz\Documents\GitHub\FuncDraw\FuncDraw\FuncDraw\obj\Debug\net8.0-windows\FuncDraw.pdb
 C:\Users\Mateusz\Documents\GitHub\FuncDraw\FuncDraw\FuncDraw\obj\Debug\net8.0-windows\FuncDraw.genruntimeconfig.cache
 C:\Users\Mateusz\Documents\GitHub\FuncDraw\FuncDraw\FuncDraw\obj\Debug\net8.0-windows\ref\FuncDraw.dll
+C:\Users\Mateusz\Documents\GitHub\FuncDraw\FuncDraw\FuncDraw\obj\Debug\net8.0-windows\FuncDraw_Content.g.cs

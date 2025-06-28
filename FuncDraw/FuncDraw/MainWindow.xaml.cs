@@ -17,6 +17,7 @@ using Color = System.Windows.Media.Color;
 using Point = System.Windows.Point;
 using Cursors = System.Windows.Input.Cursors;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace FuncDraw
 {
@@ -37,6 +38,7 @@ namespace FuncDraw
         
         public MainWindow()
         {
+            
             InitializeComponent();
             ShowHideBtn.Click += ShowHideBtn_Click;
             MainGrid.SizeChanged += GenerateGrid;
@@ -120,10 +122,10 @@ namespace FuncDraw
                 double end = begining * (-1) + scaleValue * 5;
                 
 
-                PointsGenerator pointsGenerator = new PointsGenerator();
-                if (correctedExpression.Contains("^"))
-                {
-                    for (double i = begining; i < end; i += (scaleValue/5))
+                PointsGenerator pointsGenerator1 = new PointsGenerator();
+                PointsGenerator pointsGenerator2 = new PointsGenerator();
+
+                for (double i = 0; i < end; i += (scaleValue/10))
                     {
                         // dodanie do listy
                         List<string> tokens = Tokenizer.Tokenize(correctedExpression);
@@ -139,39 +141,38 @@ namespace FuncDraw
                         }
                         else
                         {
-                            pointsGenerator.AddPoint(X, Y);
+                            pointsGenerator1.AddPoint(X, Y);
 
                         }
 
                     }
-                }
-
-                else
+                for (double i = begining; i <= 0; i += (scaleValue /10))
                 {
-                    for (double i = begining; i < end; i += (scaleValue))
+                    // dodanie do listy
+                    List<string> tokens = Tokenizer.Tokenize(correctedExpression);
+                    CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
+                    string XYposition = calculate.FindEquasion();
+                    double X = double.Parse(XYposition.Split(":")[0]);
+                    X = X * skala + xCenter + przesuniecie.X;
+                    double Y = double.Parse(XYposition.Split(":")[1]);
+                    Y = yCenter - Y * skala + przesuniecie.Y;
+                    if (X < -50 || X > MainGrid.ActualWidth + 50 || Y < -50 || Y > MainGrid.ActualHeight + 50)
                     {
-                        // dodanie do listy
-                        List<string> tokens = Tokenizer.Tokenize(correctedExpression);
-                        CalculatePosition calculate = new CalculatePosition(i, i, tokens, output);
-                        string XYposition = calculate.FindEquasion();
-                        double X = double.Parse(XYposition.Split(":")[0]);
-                        X = X * skala + xCenter + przesuniecie.X;
-                        double Y = double.Parse(XYposition.Split(":")[1]);
-                        Y = yCenter - Y * skala + przesuniecie.Y;
-                        if (X < -50 || X > MainGrid.ActualWidth + 50 || Y < -50 || Y > MainGrid.ActualHeight + 50)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            pointsGenerator.AddPoint(X, Y);
-
-                        }
+                        continue;
                     }
+                    else
+                    {
+                        pointsGenerator2.AddPoint(X, Y);
+
+                    }
+
                 }
+
+
+
 
                 // utworzenie polyline i dodanie do canvas
-                PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator.points , color , 2 );
+                PolyLineDrower polyLineDrower = new PolyLineDrower(MainGrid , pointsGenerator1.points , pointsGenerator2.points , color , 2 );
                 polyLineDrower.DrawPolyLine();
 
 

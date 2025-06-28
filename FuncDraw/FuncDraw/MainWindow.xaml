@@ -11,14 +11,15 @@
 
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"  Name="mainGrid" />
+            <ColumnDefinition Width="3*"  Name="mainGrid" />
+            <ColumnDefinition Width="37*"/>
             <ColumnDefinition Width="200" Name="editor"  />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Canvas x:Name="MainGrid" Background="WhiteSmoke" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseMove="Canvas_Mouse_Move" MouseLeftButtonDown="Canvas_LeftBtn_Down" MouseLeftButtonUp="Canvas_LeftBtn_Up"/>
-        <DockPanel x:Name="SideMenu" Grid.Column="1" Width="200"  HorizontalAlignment="Left" Background="WhiteSmoke">
+        <Canvas x:Name="MainGrid" Background="WhiteSmoke" Grid.Column="0" Grid.Row="0" MouseMove="Canvas_Mouse_Move" MouseLeftButtonDown="Canvas_LeftBtn_Down" MouseLeftButtonUp="Canvas_LeftBtn_Up" Grid.ColumnSpan="2"/>
+        <DockPanel x:Name="SideMenu" Grid.Column="2" Width="200"  HorizontalAlignment="Center" Background="WhiteSmoke">
 
             <Grid x:Name="Container">
 
